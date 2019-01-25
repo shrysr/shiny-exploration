@@ -10,7 +10,8 @@ Free video tutorials from Datacamp sponsored by Rstudio. There are links to adva
 
 * Written Shiny Tutorial - Rstudio
 
-** Lesson 1 
+** DONE Lesson 1 
+CLOSED: [2019-01-24 Thu 13:22]
 *** Installing shiny
 
 #+BEGIN_SRC R :session *R:shiny-exploration
@@ -24,6 +25,8 @@ runExample("01_hello")
 
 **** TODO app.r re-written
 
+- Note taken on [2019-01-24 Thu 13:22] \\
+  God knows what the error is. I have moved on and understood the concepts.
 #+BEGIN_SRC R :session *R:shiny-exploration 
 library(shiny)
 
@@ -134,6 +137,7 @@ server <- function(input, output) {
   # 1. It is "reactive" and therefore should be automatically
   #    re-executed when inputs (input$bins) change
   # 2. Its output type is a plot
+
   output$distPlot <- renderPlot({
 
     x    <- faithful$waiting
@@ -151,8 +155,8 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-
-** Lesson 2
+** DONE Lesson 2
+CLOSED: [2019-01-24 Thu 13:20]
 *** starting with custom app
 
 #+BEGIN_SRC R :session *R:shiny-exploration :tangle ./app-02/app.R
@@ -164,14 +168,15 @@ ui  <- fluidPage(
     titlePanel("This is the title"),
 
     sidebarLayout(
-        sidebarPanel("sidebar panel"),
-        mainPanel("main panel"),
-        position = "right"
+        sidebarPanel("Hello panel",
+                     h2("This is h2 title in the sidepanel")),
+        mainPanel("main panel",
+                  h1("Another title in h1", align = "center")
+                  ),
+#        position = "right"
     )
 
 )
-
-
 ## Define server logic
 
 server <- function(input, output){
@@ -184,6 +189,68 @@ server <- function(input, output){
 ## Run the app
 shinyApp(ui = ui, server = server)
 #+END_SRC
+*** test app for formatting difference highlight
+
+#+BEGIN_SRC R :session *R:shiny-exploration
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("My Shiny App"),
+  sidebarLayout(
+    sidebarPanel(),
+    mainPanel(
+      p("p creates a paragraph of text."),
+      p("A new p() command starts a new paragraph. Supply a style attribute to change the format of the entire paragraph.", style = "font-family: 'times'; font-si16pt"),
+      strong("strong() makes bold text."),
+      em("em() creates italicized (i.e, emphasized) text."),
+      br(),
+      code("code displays your text similar to computer code"),
+      div("div creates segments of text with a similar style. This division of text is all blue because I passed the argument 'style = color:blue' to div", style = "color:blue"),
+      br(),
+      p("span does the same thing as div, but it works with",
+        span("groups of words", style = "color:blue"),
+        "that appear inside a paragraph.")
+    )
+  )
+) 
 
 
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+*** testing knowledge 
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./app-02/app.R
+library(shiny)
+
+## Define UI
+ui  <- fluidPage(
+    titlePanel("My Shiny App"),
+
+    sidebarLayout(
+        sidebarPanel(h1("Installation"),
+                     p("Shiny is available on CRAN, so you can install it the usual way using:"),
+                     br(),
+                     code('install.packages("shiny")'),
+                     img(src="rstudio.png", height = 70, width = 200),
+                     p("Shiny is a product of ", a("Rstudio",
+                                                 href="http://www.shiny.rstudio.com"))
+                     ),
+        mainPanel()
+    )
+)
+
+
+## Define server logic
+server <- function(input, output){}
+
+
+
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+
+#+RESULTS:
+
+** TODO Lesson 3
 
