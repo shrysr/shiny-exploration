@@ -667,6 +667,6 @@ shinyApp(ui = ui, server = server)
 
 
 
-** TODO Lesson 6: speed and modules
+** TODO Lesson 6: stockVis app
 
 *** 
