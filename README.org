@@ -440,7 +440,6 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-
 ** DONE Lesson 4 : reactive ouput display
 CLOSED: [2019-01-28 Mon 10:51]
 
@@ -562,7 +561,6 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-
 ** DONE Lesson 5: more complex reactive output
 CLOSED: [2019-01-28 Mon 13:30]
 
@@ -585,7 +583,7 @@ percent_map(counties$white, "darkgreen", "% White")
 
 
 
-*** Setting up graphs in shiny app
+*** Setting up chloropleth output in shiny app
 Using the dataset =counties.rds= collected with the =Uscensus2010= R package. [[http://shiny.rstudio.com/tutorial/written-tutorial/lesson5/census-app/data/counties.rds][Download link]].
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app-02/app.R
@@ -666,7 +664,271 @@ shinyApp(ui = ui, server = server)
 #+END_SRC 
 
 
-
 ** TODO Lesson 6: stockVis app
 
 *** 
+
+* Recreating and Expanding inbuilt examples 
+:PROPERTIES:
+:CREATED:  <2019-01-29 Tue 07:19>
+:END:
+
+** Eg 1 Hello Shiny
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./hello-shiny/app.R
+library(shiny)
+
+## Define UI
+ui  <- fluidPage(
+  titlePanel("Hello Shiny"),
+
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("slider1",
+                  label = "Number of Bins",
+                  min = 1,
+                  max = 50,
+                  value = 20
+                  )
+    ),
+      mainPanel("",
+                plotOutput("histplot")
+                )
+  )
+)
+
+
+## Define server logic
+
+server <- function(input, output){
+
+  output$histplot <- renderPlot({
+
+    dataset <- faithful$waiting
+    bins <- seq(min(dataset), max(dataset), length.out = input$slider1 +1)
+
+    hist(dataset, breaks = bins, col = "blue", border = "white",
+         xlab = "Waiting time to next eruption(mins)",
+         main = "Histogram of waiting times"
+         )
+  })
+    
+}
+
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+
+** TODO Eg 2 Shiny text
+
+*** DONE Base Example
+CLOSED: [2019-01-29 Tue 08:21]
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./shiny-text-eg2/app.R
+library(shiny)
+library(tidyverse)
+
+## Define UI
+ui  <- fluidPage(
+  titlePanel("Shiny text"),
+
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset_choice",
+                  label = "Choose a dataset",
+                  choices = c("rock", "diamonds", "cars"),
+                  #value = ""
+                  ),
+      numericInput("observation_number",
+                   label = "Choose number of observations to display",
+                   value = 10
+                   )
+    ),
+    mainPanel(
+
+      verbatimTextOutput("summary"),
+
+      tableOutput("view")
+    )
+  )
+)
+
+
+## Define server logic
+
+server <- function(input, output){
+
+  datasetInput <- reactive({
+    switch(input$dataset_choice,
+           "rock" = rock,
+           "diamonds"  = diamonds,
+           "cars"   = cars
+           )
+  })
+
+  output$summary <- renderPrint({
+    datasetInput() %>% summary()
+  })
+
+  output$view <- renderTable({
+    datasetInput() %>% head(n = input$observation_number)
+  })
+}
+
+
+
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+
+*** TODO  Expansion to include all datasets
+:PROPERTIES:
+:CREATED:  <2019-01-29 Tue 08:19>
+:END:
+
+**** Introduction
+
+**** Resources
+- [[https://stackoverflow.com/questions/33797666/how-do-i-get-a-list-of-built-in-data-sets-in-r][SO Discusion: List of in-built datasets in R]]
+
+**** Code 
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./shiny-text-eg2/app.R
+library(shiny)
+library(tidyverse)
+
+## Define UI
+ui  <- fluidPage(
+  titlePanel("Shiny text"),
+
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset_choice",
+                  label = "Choose a dataset",
+                  choices = c("rock", "diamonds", "cars"),
+                  #value = ""
+                  ),
+      numericInput("observation_number",
+                   label = "Choose number of observations to display",
+                   value = 10
+                   )
+    ),
+    mainPanel(
+
+      verbatimTextOutput("summary"),
+
+      tableOutput("view")
+    )
+  )
+)
+
+
+## Define server logic
+
+server <- function(input, output){
+
+  datasetInput <- reactive({
+    switch(input$dataset_choice,
+           "rock" = rock,
+           "diamonds"  = diamonds,
+           "cars"   = cars
+           )
+  })
+
+  output$summary <- renderPrint({
+    datasetInput() %>% summary()
+  })
+
+  output$view <- renderTable({
+    datasetInput() %>% head(n = input$observation_number)
+  })
+}
+
+
+
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+
+
+** TODO Eg 6 - tabsets
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./tabsets-eg-6/app.R
+library(shiny)
+library(shinythemes)
+
+## Define UI
+ui  <- fluidPage(
+  themeSelector(),
+  titlePanel("Using tabsets"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("dist_type",
+                   "Distribution type",
+                   choices = c("Normal" = "norm",
+                               "Uniform" = "unif",
+                               "Log-normal" = "lnorm",
+                               "Exponential" = "exp"
+                               )
+                   ),
+      sliderInput("slider1",
+                  label = "Number of observations", 
+                  min = 1,
+                  max = 1000,
+                  value = 500
+                  )
+    ),
+
+    mainPanel(
+
+      tabsetPanel(type = "tabs",
+                  tabPanel(title = "Plot", plotOutput("plot1")),
+                  tabPanel(title = "Summary", verbatimTextOutput("vbto1_summary")),
+                  tabPanel(title = "Table", tableOutput("tabl1"))
+                  )
+    )
+  )       
+)
+
+
+## Define server logic
+
+server <- function(input, output){
+  d <- reactive({
+    dist <- switch(input$dist_type,
+           norm = rnorm,
+           unif = runif,
+           lnorm = rlnorm,
+           exp = exp
+#           rnorm
+           )
+
+    dist(input$slider1)
+  })
+
+  output$plot1 <- renderPlot({
+    dist <- input$dist_type
+    n <- input$slider1
+
+    hist(d(),
+         main = paste("r", dist, "(", n, ")", sep = ""),
+         col = "blue", border = "white")
+  })
+
+  output$vbto1_summary <- renderText({
+    summary(d())
+  })
+
+  output$tabl1 <- renderTable({
+    d()
+  })
+}
+
+
+
+## Run the app
+shinyApp(ui = ui, server = server)
+
+#+END_SRC
+
+
