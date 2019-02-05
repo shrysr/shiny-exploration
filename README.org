@@ -3,10 +3,10 @@
 This repo will serve as a learning and exploration ground to build shiny apps from the ground-up. It will include references, notes and the scripts to reproduce the apps.
 
 * Resources
-Overall resources used to build these examples. 
+Resources used as reference to build these examples. 
 
-** Rstudio documentation [[https://shiny.rstudio.com/tutorial/][link]]
-Free video tutorials from Datacamp sponsored by Rstudio. There are links to advanced articles, as well as written tutorials. This is a good resource to get started. 
+1. Rstudio documentation [[https://shiny.rstudio.com/tutorial/][link]]
+   - Free video tutorials from Datacamp sponsored by Rstudio. There are links to advanced articles, as well as written tutorials. This is a good resource to get started.
 
 * Shiny Tutorials - Rstudio
 
@@ -26,7 +26,7 @@ install.packages("shiny")
 runExample("01_hello")
 #+END_SRC
 
-**** app.r copied
+*** [[/app-01/][app-01]]
 
 #+BEGIN_SRC R :session *R:shiny-exploration :tangle ./app-01/app.R
 library(shiny)
@@ -93,7 +93,7 @@ shinyApp(ui = ui, server = server)
 
 ** DONE Lesson 2
 CLOSED: [2019-01-24 Thu 13:20]
-*** starting with custom app
+*** Starting with custom app
 
 #+BEGIN_SRC R :session *R:shiny-exploration :tangle ./app-02/app.R
 library(shiny)
@@ -126,7 +126,7 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-*** test app for formatting difference highlight
+*** Test app for formatting difference highlight
 
 #+BEGIN_SRC R :session *R:shiny-exploration
 library(shiny)
@@ -156,7 +156,7 @@ ui <- fluidPage(
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-*** testing knowledge 
+*** Testing knowledge 
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./app-02/app.R
 library(shiny)
@@ -796,7 +796,6 @@ shinyApp(ui = ui, server = server)
 library("easypackages")
 libraries("shiny", "tidyverse")
 
-
 ## Define UI
 ui  <- fluidPage(
     titlePanel("R's in-built Database explorer"),
@@ -814,10 +813,8 @@ ui  <- fluidPage(
            fluidRow(
              verbatimTextOutput("glimpse")
                          ))
-
     )
 )       
-
 
 ## Define server logic
 
@@ -839,8 +836,6 @@ server <- function(input, output){
   })
     
 }
-
-
 
 ## Run the app
 shinyApp(ui = ui, server = server)
