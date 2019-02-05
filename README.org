@@ -128,7 +128,7 @@ shinyApp(ui = ui, server = server)
 
 *** Test app for formatting difference highlight
 
-#+BEGIN_SRC R :session *R:shiny-exploration
+#+BEGIN_SRC R :session *R:shiny-exploration*
 library(shiny)
 
 ui <- fluidPage(
@@ -156,7 +156,7 @@ ui <- fluidPage(
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-*** Testing knowledge 
+*** Testing knowledge. [[/app-02/][See app-02]]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./app-02/app.R
 library(shiny)
@@ -192,7 +192,7 @@ shinyApp(ui = ui, server = server)
 
 ** DONE Lesson 3 Multiple columns
 CLOSED: [2019-01-28 Mon 09:46]
-*** Re-implementing example
+*** Re-implementing example. [[/app-03/][See app-03]]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle app-03/app.R
 library(shiny)
@@ -328,7 +328,7 @@ shinyApp(ui = ui, server = server)
 
 #+RESULTS:
 
-*** Init censusVis task
+*** Init censusVis task. [[/app-04/][See app-04]]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle app-04/app.R
 library(shiny)
@@ -378,7 +378,10 @@ shinyApp(ui = ui, server = server)
 
 ** DONE Lesson 4 : reactive ouput display
 CLOSED: [2019-01-28 Mon 10:51]
-*** reactive censusViz task
+*** Reactive censusViz task. [[/census-app/][See census-app]]
+:PROPERTIES:
+:ID:       ee5090b3-e89b-4859-aa1f-25e340b47bf7
+:END:
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app/app.R
 library("easypackages")
@@ -438,10 +441,14 @@ shinyApp(ui = ui, server = server)
 
 *** Test: passing a list to the input choices
 
+- Note taken on [2019-02-05 Tue 11:04] \\
+  Testing to see if a list defined in a variable can be passed as choices. This is possible. 
+
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app/app.R
 library("easypackages")
 libraries("shiny", "dplyr", "stringr")
 
+## List to pass into the input box choices
 test_list = list("Percent White" ,
                  "Percent Black",
                  "Percent Hispanic",
@@ -600,7 +607,7 @@ shinyApp(ui = ui, server = server)
 :PROPERTIES:
 :CREATED:  <2019-01-29 Tue 07:19>
 :END:
-** Eg 1 Hello Shiny
+** Eg 1 Hello Shiny. [[/hello-shiny/][See hello-shiny]]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./hello-shiny/app.R
 library(shiny)
@@ -646,7 +653,7 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-** DONE Eg 2 Shiny text
+** DONE Eg 2 Shiny text. [[/shiny-text-eg2/][See shiny-text-eg2]]
 CLOSED: [2019-01-29 Tue 08:21]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./shiny-text-eg2/app.R
@@ -707,7 +714,7 @@ shinyApp(ui = ui, server = server)
 #+END_SRC
 *** DONE Base Example
 
-** TODO Eg 6 - tabsets
+** TODO Eg 6 - tabsets. [[/tabsets-eg-6/][See tabsets-eg-6]] 
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./tabsets-eg-6/app.R
 library(shiny)
