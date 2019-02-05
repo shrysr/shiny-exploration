@@ -58,7 +58,7 @@ ui  <- fluidPage(
                                       ),
                        selected = 1
                        )
-           ),selectInput("
+           ),
     column(2,
            sliderInput("slider1",
                        h3("Sliders"),
