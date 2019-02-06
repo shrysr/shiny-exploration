@@ -2,13 +2,23 @@
 
 This repo will serve as a learning and exploration ground to build shiny apps from the ground-up. It will include references, notes and the scripts to reproduce the apps.
 
-* Resources
-Resources used as reference to build these examples. 
+Planned Approach: 
+- Re-implement examples that I find from scratch, and in parallel explore other aspects and variations of the code.
+- Apply the concepts learned to develop my own shiny apps.
+- Tools used:
+  - Emacs and Org-mode (source blocks in Org-babel) have been used to create this document and scripts, ala Literate programming. 
+  - Source blocks are tangled into respective app folders and RStudio was used to quickly run and reload apps for testing. (This is just more convenient than launching the web browser from Emacs.)
+
+* References
+The references below were instrumental in the learning procedure and also function as a source of inspiration. 
+
+Note: Relevant references and links are also placed alongside the code in each section. 
 
 1. Rstudio documentation [[https://shiny.rstudio.com/tutorial/][link]]
    - Free video tutorials from Datacamp sponsored by Rstudio. There are links to advanced articles, as well as written tutorials. This is a good resource to get started.
+2. Sales revenue dashboard with Rshiny and ShinyDashboard [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
 
-* Shiny Tutorials - Rstudio
+* Shiny Tutorials - Rstudio [5/6]
 
 Re-implementing [[https://shiny.rstudio.com/tutorial/][Rstudio's tutorials]] with minor tweaks and additional explorations in some areas.
 
@@ -603,11 +613,12 @@ shinyApp(ui = ui, server = server)
 
 ** TODO Lesson 6: stockVis app
 
-* Recreating and Expanding inbuilt examples 
+* Recreating in-built Shiny examples [2/3]
 :PROPERTIES:
 :CREATED:  <2019-01-29 Tue 07:19>
 :END:
-** Eg 1 Hello Shiny. [[/hello-shiny/][See hello-shiny]]
+** DONE Eg 1 Hello Shiny. [[/hello-shiny/][See hello-shiny]]
+CLOSED: [2019-02-05 Tue 12:14]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./hello-shiny/app.R
 library(shiny)
@@ -793,7 +804,7 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-* Dataset exploration app
+* Dataset exploration app [0/1] 
 ** Layout experiments 
 
 - Note taken on [2019-02-05 Tue 09:20] \\
@@ -849,8 +860,233 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-** Shiny app around Rdatasets 
+** TODO Shiny app around Rdatasets 
 *** Introduction
 *** Resources and References
 
 1. [[https://stackoverflow.com/questions/33797666/how-do-i-get-a-list-of-built-in-data-sets-in-r][SO Discusion: List of in-built datasets in R]]
+* Shiny Dashboard init
+** References and notes
+1. Rstudio documentation, getting started with Shiny Dashboard [[https://rstudio.github.io/shinydashboard/get_started.html][link]]
+2. [[https://shiny.rstudio.com/articles/dashboards.html][There are 2 types of packages]] available to create dashboards flexdashboard and shiny dashboard. 
+** Installing shiny dashboard
+
+#+BEGIN_SRC R :session *R:shiny-exploration* 
+install.packages("shinydashboard")
+#+END_SRC
+
+** Basic app -- Init. [[/dashboard-01/][See dashboard-01]] 
+:PROPERTIES:
+:ID:       1b87facf-ff4e-4246-837b-545fbb0260b1
+:END:
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dashboard-01/app.R
+library("easypackages")
+libraries("shiny","shinydashboard", "tidyverse")
+
+## Define UI
+ui  <- dashboardPage(
+  ## Inserting the 3 components: header, sidebar, body
+  
+  dashboardHeader(title = "Basic Dashboard"),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard",
+               tabName = "dashboard",
+               icon = icon("dashboard")),
+      menuItem("Widgets",
+               tabName = "widgets",
+               icon = icon("th")
+               )
+    )
+  ),
+  dashboardBody(
+    ## Adding a fluidRow with boxes for plot and slider input
+    tabItems(
+      tabItem(
+        tabName = "dashboard",
+        fluidRow(
+          
+          box(plotOutput(
+            "plot1",
+            height = 250
+          )),
+
+          box(
+            title = "Controls",
+            sliderInput("slider1",
+                        "Number of observations",
+                        min = 1,
+                        max = 100,
+                        value = 50)
+          )
+        )
+      ),
+
+      tabItem(tabName = "widgets",
+              h2("Widgets tab")
+              )
+    )
+  )
+)
+
+## Define server logic
+
+server <- function(input, output){
+  set.seed(120)
+  histdata <- rnorm(1000)
+
+  output$plot1 <- renderPlot({
+    data <- histdata[seq_len(input$slider1)]
+    hist(data)
+  })
+      
+}
+
+## Run the app
+shinyApp(ui = ui, server = server)
+
+#+END_SRC
+
+** Notes on the structure of a dashboard: [[https://rstudio.github.io/shinydashboard/structure.html][Rstudio documentation link]]
+*** Main components : header, sidebar, body -> defined for =dashboardPage()=
+
+These can be split up into separate variables and fed into the dashboardPage function. This is useful in the case of complex or long programs. 
+
+#+BEGIN_SRC R 
+header  <- dashboardHeader()  # Defining the content of each function into a variable
+sidebar  <- dashboardSiderbar()
+body  <- dashboardBody()
+
+dashboardPage(header, sidebar, body)
+#+END_SRC
+
+**** Header
+
+This will contain the dropdownMenu() items of different types. The types could  could be messages or notifications etc. 
+
+** Experimenting with structures
+
+Incorporating elements from the structures overview in Rstudio's documentation ([[https://rstudio.github.io/shinydashboard/structure.html][link]]). 
+
+*** Dropdown menu items (static) : messages, tasks, notifications
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dashboard-01/app.R
+library("easypackages")
+libraries("shiny","shinydashboard", "tidyverse")
+
+## Define UI
+ui  <- dashboardPage(
+  ## Inserting the 3 components: header, sidebar, body
+  
+  dashboardHeader(title = "Basic Dashboard",
+                  ##Experimenting with static dropdown menu message items. 
+                  dropdownMenu(
+                    type = "messages",
+                    ## Message items require a 'from' and 'message' argument
+                    messageItem(
+                      from = "Sales Dept",
+                      message = "Sales are steady."
+                    ),
+                    messageItem(
+                      from = "Shop Floor",
+                      message = "Job XXX is done"
+                    )
+                  ),
+                  ## Adding static tasks items in dropdown menu
+                  dropdownMenu(type = "tasks",
+                               taskItem(value = 37,
+                                        ## The value denotes the percentage completion
+                                        color = "red",
+                                        "Test Project 1"
+                                        ),
+                               taskItem(value = 50,
+                                        color = "blue",
+                                        "Test Project 2"
+                                        )
+                               ),
+
+                  dropdownMenu(type = "notifications",
+                               notificationItem(
+                                 text = "Blah Blah Today is cold",
+                                 icon("users")
+                               ),
+                               notificationItem(
+                                 text = "Another notification",
+                                 icon("truck"),
+                                 status = "success"
+                               ),
+                               notificationItem(
+                                 text = "3rd notification",
+                                 icon("exclamation-triangle"),
+                                 status = "warning"
+                               )
+                               )
+                  ),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard",
+               tabName = "dashboard",
+               icon = icon("dashboard")),
+      menuItem("Widgets",
+               tabName = "widgets",
+               icon = icon("th")
+               )
+    )
+  ),
+  dashboardBody(
+    ## Adding a fluidRow with boxes for plot and slider input
+    ## Assigning the tab to the tab names and populating individual content
+    tabItems(
+      tabItem(
+        tabName = "dashboard",
+        fluidRow(
+          ## Note that the objects are encapsulated within a box
+          box(plotOutput(
+            "plot1",
+            height = 250
+          )),
+
+          box(
+            title = "Controls",
+            sliderInput("slider1",
+                        "Number of observations",
+                        min = 1,
+                        max = 100,
+                        value = 50)
+          )
+        )
+      ),
+
+      tabItem(tabName = "widgets",
+              h2("Widgets tab")
+              )
+    )
+  )
+)
+
+## Define server logic
+
+server <- function(input, output){
+  set.seed(120)
+  histdata <- rnorm(1000)
+
+  output$plot1 <- renderPlot({
+    data <- histdata[seq_len(input$slider1)]
+    hist(data)
+  })
+      
+}
+
+## Run the app
+shinyApp(ui = ui, server = server)
+
+#+END_SRC
+
+*** TODO Dropdown menu for messages with Dynamic message items
+
+* TODO Sales revenue app - Shiny dashboard
+
+** Reference [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
+
+
