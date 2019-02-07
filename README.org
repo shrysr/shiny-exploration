@@ -1,3 +1,4 @@
+#+PROPERTY: mkdirp yes
 * Introduction
 
 This repo will serve as a learning and exploration ground to build shiny apps from the ground-up. It will include references, notes and the scripts to reproduce the apps.
@@ -1086,7 +1087,152 @@ shinyApp(ui = ui, server = server)
 *** TODO Dropdown menu for messages with Dynamic message items
 
 * TODO Sales revenue app - Shiny dashboard
-
 ** Reference [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
+** replicating the code
+- Note taken on [2019-02-06 Wed 10:17] \\
+  With wget : -P is the flag for the prefix directory for the file being downloaded. The path will be created if it does not exist. If the file already exists, a duplicate will be created with the '.1' suffix.
+
+*** Loading libraries
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
+library("easypackages")
+libraries("shiny", "shinydashboard", "tidyverse")
+#+END_SRC
+
+*** Downloading raw csv and loading into variable 
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
+## Download file to specific location 
+system("wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/") 
+
+#+END_SRC
+
+Reading in the csv file 
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
+recommendation_raw  <- read.csv("./sales-rev-app/recommendation.csv", stringsAsFactors = FALSE, header = TRUE)
+#+END_SRC
+
+#+RESULTS:
+| Axis Bank    | FBB  | North |  2000 |
+| HSBC         | FBB  | South | 30000 |
+| SBI          | FBB  | East  |  1000 |
+| ICICI        | FBB  | West  |  1000 |
+| Bandhan Bank | FBB  | West  |   200 |
+| Axis Bank    | SIMO | North |   200 |
+| HSBC         | SIMO | South |   300 |
+| SBI          | SIMO | East  |   100 |
+| ICICI        | SIMO | West  |   100 |
+| Bandhan Bank | SIMO | West  |   200 |
+
+*** Init dashboard
+:PROPERTIES:
+:ID:       c4cc69be-7be8-40d9-86ed-aac4dde8d5f0
+:END:
+
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
+## Defining individual components
+
+## header
+header <- dashboardHeader(title = "Sales Revenue Dashboard")
+
+## sidebar contents
+sidebar <-
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard",
+               icon = icon("dashboard"),
+               tabName = "dashboard"
+               ),
+      menuItem("Visit us",
+               icon = icon("send", lib = 'glyphicon'),
+               href = "https://shrysr.github.io"
+               )
+    )
+  )
+
+## Defining individual rows
+frow1 <- fluidRow(
+  box(
+    valueBoxOutput("value1"),
+    valueBoxOutput("value2"),
+    valueBoxOutput("value3")
+    
+  )
+)
+
+frow2 <- fluidRow(
+  box(
+    title = "Revenue per account",
+    status = "primary",
+    solidHeader = TRUE,
+    collapsible = TRUE,
+    plotOutput("revenuebyacct", height = "300px")
+  )
+)
+
+## combining the defined fluid rows into the dashboard body
+body <- dashboardBody(frow1, frow2)
+
+## Defining UI
+ui <- dashboardPage(title = "test title", header,sidebar, body)
+
+#+END_SRC
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
+## Define server logic
+
+server <- function(input, output){
+  ## Data manipulation
+  total_revenue <- sum(recommendation_raw$revenue)
+  sales_account <-
+    recommendation_raw %>%
+    group_by(Account) %>%
+    summarise(value = sum(Revenue)) %>%
+    filter(value == max(value))
+
+  prof_prod <-
+    recommendation_raw %>%
+    group_by(Product) %>%
+    summarise(value = sum(Revenue)) %>%
+    filter(value == max(value))
+
+  ## Creating valuebox output
+  output$value1 <- renderValueBox ({
+    valueBox(
+      formatC(sales_account$value, format = "d", big.mark= ','),
+      paste('Top Account: ', sales_account$Account),
+      icon = icon("stats", lib ='glyphicon'),
+      color = "purple"
+    )
+  })
+
+  output$value2 <- renderValueBox({
+    valueBox(
+      formatC(total_revenue, format = "d", big.mark = ','),
+      paste('Top Account: ', sales_account$Account),
+      icon = icon("gbp", lib = 'glyphicon'),
+      color = "green"
+    )
+  })
+
+  output$value3 <- renderValueBox({
+    valueBox(
+      formatC(total_revenue, format = "d", big.mark = ','),
+      paste("Top Product: ", prof_prod$Product),
+      icon = icon("menu-hamburger", lib = 'glyphicon'),
+      color = "yellow"
+    )
+  })
+      
+}
+
+#+END_SRC
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
+## Run the app
+shinyApp(ui = ui, server = server)
+
+#+END_SRC
 
 

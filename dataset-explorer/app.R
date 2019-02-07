@@ -1,7 +1,6 @@
 library("easypackages")
 libraries("shiny", "tidyverse")
 
-
 ## Define UI
 ui  <- fluidPage(
     titlePanel("R's in-built Database explorer"),
@@ -19,10 +18,8 @@ ui  <- fluidPage(
            fluidRow(
              verbatimTextOutput("glimpse")
                          ))
-
     )
 )       
-
 
 ## Define server logic
 
@@ -44,8 +41,6 @@ server <- function(input, output){
   })
     
 }
-
-
 
 ## Run the app
 shinyApp(ui = ui, server = server)

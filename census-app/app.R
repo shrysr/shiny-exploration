@@ -53,6 +53,7 @@ shinyApp(ui = ui, server = server)
 library("easypackages")
 libraries("shiny", "dplyr", "stringr")
 
+## List to pass into the input box choices
 test_list = list("Percent White" ,
                  "Percent Black",
                  "Percent Hispanic",
