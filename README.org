@@ -3,17 +3,17 @@
 
 This repo will serve as a learning and exploration ground to build shiny apps from the ground-up. It will include references, notes and the scripts to reproduce the apps.
 
-Planned Approach: 
+Planned Approach:
 - Re-implement examples that I find from scratch, and in parallel explore other aspects and variations of the code.
 - Apply the concepts learned to develop my own shiny apps.
 - Tools used:
-  - Emacs and Org-mode (source blocks in Org-babel) have been used to create this document and scripts, ala Literate programming. 
+  - Emacs and Org-mode (source blocks in Org-babel) have been used to create this document and scripts, ala Literate programming.
   - Source blocks are tangled into respective app folders and RStudio was used to quickly run and reload apps for testing. (This is just more convenient than launching the web browser from Emacs.)
 
 * References
-The references below were instrumental in the learning procedure and also function as a source of inspiration. 
+The references below were instrumental in the learning procedure and also function as a source of inspiration.
 
-Note: Relevant references and links are also placed alongside the code in each section. 
+Note: Relevant references and links are also placed alongside the code in each section.
 
 1. Rstudio documentation [[https://shiny.rstudio.com/tutorial/][link]]
    - Free video tutorials from Datacamp sponsored by Rstudio. There are links to advanced articles, as well as written tutorials. This is a good resource to get started.
@@ -31,7 +31,7 @@ CLOSED: [2019-01-24 Thu 13:22]
 install.packages("shiny")
 #+END_SRC
 
-*** Running in-built shiny examples 
+*** Running in-built shiny examples
 
 #+BEGIN_SRC R :session *R:shiny-exploration
 runExample("01_hello")
@@ -128,7 +128,7 @@ ui  <- fluidPage(
 
 server <- function(input, output){
 
-    
+
 }
 
 
@@ -160,7 +160,7 @@ ui <- fluidPage(
         "that appear inside a paragraph.")
     )
   )
-) 
+)
 
 
 ## Run the app
@@ -241,7 +241,7 @@ ui  <- fluidPage(
                      value = ""
                      )
            )
-    
+
   ),
   ## Inserting another fluid row element
   fluidRow(
@@ -287,12 +287,12 @@ ui  <- fluidPage(
                      h3("select from drop down box"),
                      choices = list("choice 1" = 22,
                                     "choice 2" = 2,
-                                    "choice fake 3" = 33                       
+                                    "choice fake 3" = 33
                                     ),
                      selected = ""
                      )
            )
-    
+
   ),
   fluidRow(
     column(3,
@@ -328,7 +328,7 @@ ui  <- fluidPage(
 
 server <- function(input, output){
 
-  
+
 }
 
 
@@ -376,7 +376,7 @@ ui  <- fluidPage(
 
 server <- function(input, output){
 
-    
+
 }
 
 
@@ -453,7 +453,7 @@ shinyApp(ui = ui, server = server)
 *** Test: passing a list to the input choices
 
 - Note taken on [2019-02-05 Tue 11:04] \\
-  Testing to see if a list defined in a variable can be passed as choices. This is possible. 
+  Testing to see if a list defined in a variable can be passed as choices. This is possible.
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app/app.R
 library("easypackages")
@@ -595,12 +595,12 @@ server <- function(input, output){
                          "Percent Asian" = list(counties$asian, "darkorange","% Asian population"),
                          "Percent Hispanic" = list(counties$hispanic, "pink","% Hispanic population"),
                          )
-    
+
     arg_list$max = input$slider1[2]
     arg_list$min = input$slider1[1]
 
     do.call(percent_map,arg_list)
-    
+
   })
 }
 
@@ -610,7 +610,7 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 
 
-#+END_SRC 
+#+END_SRC
 
 ** TODO Lesson 6: stockVis app
 
@@ -658,7 +658,7 @@ server <- function(input, output){
          main = "Histogram of waiting times"
          )
   })
-    
+
 }
 
 ## Run the app
@@ -726,7 +726,7 @@ shinyApp(ui = ui, server = server)
 #+END_SRC
 *** DONE Base Example
 
-** TODO Eg 6 - tabsets. [[/tabsets-eg-6/][See tabsets-eg-6]] 
+** TODO Eg 6 - tabsets. [[/tabsets-eg-6/][See tabsets-eg-6]]
 
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./tabsets-eg-6/app.R
 library(shiny)
@@ -736,7 +736,7 @@ library(shinythemes)
 ui  <- fluidPage(
   themeSelector(),
   titlePanel("Using tabsets"),
-  
+
   sidebarLayout(
     sidebarPanel(
       radioButtons("dist_type",
@@ -748,7 +748,7 @@ ui  <- fluidPage(
                                )
                    ),
       sliderInput("slider1",
-                  label = "Number of observations", 
+                  label = "Number of observations",
                   min = 1,
                   max = 1000,
                   value = 500
@@ -763,7 +763,7 @@ ui  <- fluidPage(
                   tabPanel(title = "Table", tableOutput("tabl1"))
                   )
     )
-  )       
+  )
 )
 
 
@@ -805,9 +805,141 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-* Dataset exploration app [0/1] 
-** Layout experiments 
+* Dataset exploration app [0/1]
+** Switching to dashboard library
+*** Loading libraries
+#+BEGIN_SRC R :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
+# Loading Libraries
+library("easypackages")
+libraries("tidyverse", "tidyquant", "readxl", "shiny", "shinydashboard", "ISLR", "MASS")
+#+END_SRC
 
+#+RESULTS:
+
+*** UI
+**** header
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
+header <- dashboardHeader(title= "R Data set explorer")
+#+END_SRC
+
+#+RESULTS:
+
+**** sidebar
+#+BEGIN_SRC R  :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
+sidebar <- dashboardSidebar(
+    sidebarMenu(
+      menuItem("In-built data sets",
+               tabName = "inbuilt_datasets",
+               icon = icon("dashboard")
+               ),
+      menuItem("Rdatasets",
+               tabName = "rdatasets",
+               icon = icon("dashboard")
+               )
+    )
+)
+#+END_SRC
+
+#+RESULTS:
+
+****  body
+#+BEGIN_SRC  R :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
+body <- dashboardBody(
+  tabItems(
+    tabItem(
+      tabName = "inbuilt_datasets",
+      fluidRow(
+
+        box(title = "Input",
+            selectInput("dataset",
+                        label = "Select Dataset",
+                        choices = c(ls("package:datasets") ,
+                                    data(package = "MASS")$results %>% as.tibble %>% .$Title
+                                    )
+                        )
+           ),
+
+        box(title = "Summary",
+            verbatimTextOutput("summary"),
+            fluidRow(
+              box(
+                title = "Data Glimpse",
+                verbatimTextOutput("glimpse")
+              )
+            )
+        )
+      )
+      )
+     ),
+  tabItem(
+    tabName = "rdatasets",
+    h2("Rdatasets"),
+    fluidRow(
+
+      box(title = "Input",
+          selectInput("rdataset",
+                      label = "Select from RDatasets",
+                      choices = data(package = "MASS")$results %>% as.tibble %>% .$Title
+                        ),
+
+      box(title = "Summary",
+            verbatimTextOutput("summary_rdatasets"),
+            fluidRow(
+              box(
+            title = "Data Glimpse"),
+          verbatimTextOutput("glimpse_rdatasets")
+          )
+          )
+    )
+  )
+  )
+)
+#+END_SRC
+
+#+RESULTS:
+
+*** Calling
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
+ui  <- dashboardPage(header, sidebar, body)
+#+END_SRC
+
+#+RESULTS:
+
+*** Server
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
+## Define server logic
+
+server <- function(input, output){
+
+  output$summary = renderPrint({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    summary(dataset)
+  })
+
+  ## output$table = renderTable({
+  ##   dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+  ##   dataset
+  ## })
+
+  output$glimpse = renderPrint({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    glimpse(dataset)
+  })
+
+}
+#+END_SRC
+
+#+RESULTS:
+
+*** App
+
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+
+** Simple Layout - In built R Data Explorer
 - Note taken on [2019-02-05 Tue 09:20] \\
   Appears that the sidepanel and mainpanel concepts cannot be used with =fluidRow()= as subcomponents. Instead, it is possible to use only =fluidRow()= to partition the page, and use it to create individual rows within a column. Perhaps this is more flexible in the long run.
 
@@ -822,7 +954,7 @@ ui  <- fluidPage(
   fluidRow(
     column(2,
            "Input",
-           selectInput("dataset", 
+           selectInput("dataset",
                        label = "Select Dataset",
                        choices = ls("package:datasets")
                        )
@@ -833,7 +965,7 @@ ui  <- fluidPage(
              verbatimTextOutput("glimpse")
                          ))
     )
-)       
+)
 
 ## Define server logic
 
@@ -853,7 +985,7 @@ server <- function(input, output){
     dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
     glimpse(dataset)
   })
-    
+
 }
 
 ## Run the app
@@ -861,22 +993,22 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-** TODO Shiny app around Rdatasets 
+** TODO Shiny app around Rdatasets
 *** Introduction
 *** Resources and References
-
 1. [[https://stackoverflow.com/questions/33797666/how-do-i-get-a-list-of-built-in-data-sets-in-r][SO Discusion: List of in-built datasets in R]]
+***
 * Shiny Dashboard init
 ** References and notes
 1. Rstudio documentation, getting started with Shiny Dashboard [[https://rstudio.github.io/shinydashboard/get_started.html][link]]
-2. [[https://shiny.rstudio.com/articles/dashboards.html][There are 2 types of packages]] available to create dashboards flexdashboard and shiny dashboard. 
+2. [[https://shiny.rstudio.com/articles/dashboards.html][There are 2 types of packages]] available to create dashboards flexdashboard and shiny dashboard.
 ** Installing shiny dashboard
 
-#+BEGIN_SRC R :session *R:shiny-exploration* 
+#+BEGIN_SRC R :session *R:shiny-exploration*
 install.packages("shinydashboard")
 #+END_SRC
 
-** Basic app -- Init. [[/dashboard-01/][See dashboard-01]] 
+** Basic app -- Init. [[/dashboard-01/][See dashboard-01]]
 :PROPERTIES:
 :ID:       1b87facf-ff4e-4246-837b-545fbb0260b1
 :END:
@@ -888,7 +1020,7 @@ libraries("shiny","shinydashboard", "tidyverse")
 ## Define UI
 ui  <- dashboardPage(
   ## Inserting the 3 components: header, sidebar, body
-  
+
   dashboardHeader(title = "Basic Dashboard"),
   dashboardSidebar(
     sidebarMenu(
@@ -907,7 +1039,7 @@ ui  <- dashboardPage(
       tabItem(
         tabName = "dashboard",
         fluidRow(
-          
+
           box(plotOutput(
             "plot1",
             height = 250
@@ -941,7 +1073,7 @@ server <- function(input, output){
     data <- histdata[seq_len(input$slider1)]
     hist(data)
   })
-      
+
 }
 
 ## Run the app
@@ -951,10 +1083,9 @@ shinyApp(ui = ui, server = server)
 
 ** Notes on the structure of a dashboard: [[https://rstudio.github.io/shinydashboard/structure.html][Rstudio documentation link]]
 *** Main components : header, sidebar, body -> defined for =dashboardPage()=
+These can be split up into separate variables and fed into the dashboardPage function. This is useful in the case of complex or long programs.
 
-These can be split up into separate variables and fed into the dashboardPage function. This is useful in the case of complex or long programs. 
-
-#+BEGIN_SRC R 
+#+BEGIN_SRC R
 header  <- dashboardHeader()  # Defining the content of each function into a variable
 sidebar  <- dashboardSiderbar()
 body  <- dashboardBody()
@@ -964,11 +1095,11 @@ dashboardPage(header, sidebar, body)
 
 **** Header
 
-This will contain the dropdownMenu() items of different types. The types could  could be messages or notifications etc. 
+This will contain the dropdownMenu() items of different types. The types could  could be messages or notifications etc.
 
 ** Experimenting with structures
 
-Incorporating elements from the structures overview in Rstudio's documentation ([[https://rstudio.github.io/shinydashboard/structure.html][link]]). 
+Incorporating elements from the structures overview in Rstudio's documentation ([[https://rstudio.github.io/shinydashboard/structure.html][link]]).
 
 *** Dropdown menu items (static) : messages, tasks, notifications
 
@@ -979,9 +1110,9 @@ libraries("shiny","shinydashboard", "tidyverse")
 ## Define UI
 ui  <- dashboardPage(
   ## Inserting the 3 components: header, sidebar, body
-  
+
   dashboardHeader(title = "Basic Dashboard",
-                  ##Experimenting with static dropdown menu message items. 
+                  ##Experimenting with static dropdown menu message items.
                   dropdownMenu(
                     type = "messages",
                     ## Message items require a 'from' and 'message' argument
@@ -1076,7 +1207,7 @@ server <- function(input, output){
     data <- histdata[seq_len(input$slider1)]
     hist(data)
   })
-      
+
 }
 
 ## Run the app
@@ -1098,15 +1229,15 @@ library("easypackages")
 libraries("shiny", "shinydashboard", "tidyverse")
 #+END_SRC
 
-*** Downloading raw csv and loading into variable 
+*** Downloading raw csv and loading into variable
 
 #+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-## Download file to specific location 
-system("wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/") 
+## Download file to specific location
+system("wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/")
 
 #+END_SRC
 
-Reading in the csv file 
+Reading in the csv file
 
 #+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
 recommendation_raw  <- read.csv("./sales-rev-app/recommendation.csv", stringsAsFactors = FALSE, header = TRUE)
@@ -1157,7 +1288,7 @@ frow1 <- fluidRow(
     valueBoxOutput("value1"),
     valueBoxOutput("value2"),
     valueBoxOutput("value3")
-    
+
   )
 )
 
@@ -1224,7 +1355,7 @@ server <- function(input, output){
       color = "yellow"
     )
   })
-      
+
 }
 
 #+END_SRC
@@ -1234,5 +1365,3 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 
 #+END_SRC
-
-

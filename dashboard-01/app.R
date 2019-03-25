@@ -4,7 +4,7 @@ libraries("shiny","shinydashboard", "tidyverse")
 ## Define UI
 ui  <- dashboardPage(
   ## Inserting the 3 components: header, sidebar, body
-  
+
   dashboardHeader(title = "Basic Dashboard"),
   dashboardSidebar(
     sidebarMenu(
@@ -23,7 +23,7 @@ ui  <- dashboardPage(
       tabItem(
         tabName = "dashboard",
         fluidRow(
-          
+
           box(plotOutput(
             "plot1",
             height = 250
@@ -57,7 +57,7 @@ server <- function(input, output){
     data <- histdata[seq_len(input$slider1)]
     hist(data)
   })
-      
+
 }
 
 ## Run the app
@@ -69,9 +69,9 @@ libraries("shiny","shinydashboard", "tidyverse")
 ## Define UI
 ui  <- dashboardPage(
   ## Inserting the 3 components: header, sidebar, body
-  
+
   dashboardHeader(title = "Basic Dashboard",
-                  ##Experimenting with static dropdown menu message items. 
+                  ##Experimenting with static dropdown menu message items.
                   dropdownMenu(
                     type = "messages",
                     ## Message items require a 'from' and 'message' argument
@@ -166,7 +166,7 @@ server <- function(input, output){
     data <- histdata[seq_len(input$slider1)]
     hist(data)
   })
-      
+
 }
 
 ## Run the app

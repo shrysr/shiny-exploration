@@ -33,7 +33,7 @@ ui  <- fluidPage(
                      value = ""
                      )
            )
-    
+
   ),
   ## Inserting another fluid row element
   fluidRow(
@@ -79,12 +79,12 @@ ui  <- fluidPage(
                      h3("select from drop down box"),
                      choices = list("choice 1" = 22,
                                     "choice 2" = 2,
-                                    "choice fake 3" = 33                       
+                                    "choice fake 3" = 33
                                     ),
                      selected = ""
                      )
            )
-    
+
   ),
   fluidRow(
     column(3,
@@ -120,7 +120,7 @@ ui  <- fluidPage(
 
 server <- function(input, output){
 
-  
+
 }
 
 

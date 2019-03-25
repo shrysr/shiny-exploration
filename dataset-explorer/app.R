@@ -8,7 +8,7 @@ ui  <- fluidPage(
   fluidRow(
     column(2,
            "Input",
-           selectInput("dataset", 
+           selectInput("dataset",
                        label = "Select Dataset",
                        choices = ls("package:datasets")
                        )
@@ -19,7 +19,7 @@ ui  <- fluidPage(
              verbatimTextOutput("glimpse")
                          ))
     )
-)       
+)
 
 ## Define server logic
 
@@ -39,7 +39,7 @@ server <- function(input, output){
     dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
     glimpse(dataset)
   })
-    
+
 }
 
 ## Run the app

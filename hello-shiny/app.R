@@ -34,7 +34,7 @@ server <- function(input, output){
          main = "Histogram of waiting times"
          )
   })
-    
+
 }
 
 ## Run the app

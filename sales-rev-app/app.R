@@ -1,7 +1,7 @@
 library("easypackages")
 libraries("shiny", "shinydashboard", "tidyverse")
 
-## Download file to specific location 
+## Download file to specific location
 system("wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/")
 
 recommendation_raw  <- read.csv("./sales-rev-app/recommendation.csv", stringsAsFactors = FALSE, header = TRUE)
@@ -32,7 +32,7 @@ frow1 <- fluidRow(
     valueBoxOutput("value1"),
     valueBoxOutput("value2"),
     valueBoxOutput("value3")
-    
+
   )
 )
 
@@ -96,7 +96,7 @@ server <- function(input, output){
       color = "yellow"
     )
   })
-      
+
 }
 
 ## Run the app

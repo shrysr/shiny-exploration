@@ -5,7 +5,7 @@ library(shinythemes)
 ui  <- fluidPage(
   themeSelector(),
   titlePanel("Using tabsets"),
-  
+
   sidebarLayout(
     sidebarPanel(
       radioButtons("dist_type",
@@ -17,7 +17,7 @@ ui  <- fluidPage(
                                )
                    ),
       sliderInput("slider1",
-                  label = "Number of observations", 
+                  label = "Number of observations",
                   min = 1,
                   max = 1000,
                   value = 500
@@ -32,7 +32,7 @@ ui  <- fluidPage(
                   tabPanel(title = "Table", tableOutput("tabl1"))
                   )
     )
-  )       
+  )
 )
 
 

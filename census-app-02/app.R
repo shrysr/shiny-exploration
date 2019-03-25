@@ -57,12 +57,12 @@ server <- function(input, output){
                          "Percent Asian" = list(counties$asian, "darkorange","% Asian population"),
                          "Percent Hispanic" = list(counties$hispanic, "pink","% Hispanic population"),
                          )
-    
+
     arg_list$max = input$slider1[2]
     arg_list$min = input$slider1[1]
 
     do.call(percent_map,arg_list)
-    
+
   })
 }
 
