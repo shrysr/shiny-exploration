@@ -1,0 +1,1933 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-08 Wed 12:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Shreyas Ragavan" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1eb7da4">1. Introduction</a></li>
+<li><a href="#org060f846">2. References</a></li>
+<li><a href="#org6c40bc6">3. Shiny Tutorials - Rstudio <code>[5/6]</code></a>
+<ul>
+<li><a href="#orgc79e6cb">3.1. <span class="done DONE">DONE</span> Lesson 1</a>
+<ul>
+<li><a href="#org7319bd0">3.1.1. Installing the shiny library</a></li>
+<li><a href="#org59962a2">3.1.2. Running in-built shiny examples</a></li>
+<li><a href="#org405e765">3.1.3. app-01</a></li>
+</ul>
+</li>
+<li><a href="#org14c6b95">3.2. <span class="done DONE">DONE</span> Lesson 2</a>
+<ul>
+<li><a href="#org3a3f1c4">3.2.1. Starting with custom app</a></li>
+<li><a href="#orga05b70a">3.2.2. Test app for formatting difference highlight</a></li>
+<li><a href="#orgcacb07d">3.2.3. Testing knowledge. See app-02</a></li>
+</ul>
+</li>
+<li><a href="#org0ed6d5b">3.3. <span class="done DONE">DONE</span> Lesson 3 Multiple columns</a>
+<ul>
+<li><a href="#org2aaf7fe">3.3.1. Re-implementing example. See app-03</a></li>
+<li><a href="#org06e4297">3.3.2. Init censusVis task. See app-04</a></li>
+</ul>
+</li>
+<li><a href="#org6259fb2">3.4. <span class="done DONE">DONE</span> Lesson 4 : reactive ouput display</a>
+<ul>
+<li><a href="#org2c7ad8d">3.4.1. Reactive censusViz task. See census-app</a></li>
+<li><a href="#orgb966f52">3.4.2. Test: passing a list to the input choices</a></li>
+</ul>
+</li>
+<li><a href="#orgec4fcfb">3.5. <span class="done DONE">DONE</span> Lesson 5: more complex reactive output</a>
+<ul>
+<li><a href="#org0979679">3.5.1. Testing the helpers.R script for a chloropleth map</a></li>
+<li><a href="#orgc948334">3.5.2. Setting up chloropleth output in shiny app</a></li>
+</ul>
+</li>
+<li><a href="#org9fd7010">3.6. <span class="todo TODO">TODO</span> Lesson 6: stockVis app</a></li>
+</ul>
+</li>
+<li><a href="#org63e706b">4. Recreating in-built Shiny examples <code>[2/3]</code></a>
+<ul>
+<li><a href="#orgb8806be">4.1. <span class="done DONE">DONE</span> Eg 1 Hello Shiny. See hello-shiny</a></li>
+<li><a href="#orga35a58d">4.2. <span class="done DONE">DONE</span> Eg 2 Shiny text. See shiny-text-eg2</a>
+<ul>
+<li><a href="#org0c530d6">4.2.1. <span class="done DONE">DONE</span> Base Example</a></li>
+</ul>
+</li>
+<li><a href="#org62d5881">4.3. <span class="todo TODO">TODO</span> Eg 6 - tabsets. See tabsets-eg-6</a></li>
+</ul>
+</li>
+<li><a href="#org51927ee">5. Dataset exploration app <code>[0/1]</code></a>
+<ul>
+<li><a href="#org17a72ac">5.1. Switching to dashboard library</a>
+<ul>
+<li><a href="#org2afb111">5.1.1. Loading libraries</a></li>
+<li><a href="#org13725b7">5.1.2. UI</a></li>
+<li><a href="#orge41472c">5.1.3. Calling</a></li>
+<li><a href="#orgbaf5b60">5.1.4. Server</a></li>
+<li><a href="#orge05cdb3">5.1.5. App</a></li>
+</ul>
+</li>
+<li><a href="#orga7ed3d4">5.2. Simple Layout - In built R Data Explorer</a></li>
+<li><a href="#orgd09edea">5.3. <span class="todo TODO">TODO</span> Shiny app around Rdatasets</a>
+<ul>
+<li><a href="#orgd5178fd">5.3.1. Introduction</a></li>
+<li><a href="#org08e3074">5.3.2. Resources and References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb6ac694">6. Shiny Dashboard init</a>
+<ul>
+<li><a href="#org1baf742">6.1. References and notes</a></li>
+<li><a href="#org7d406aa">6.2. Installing shiny dashboard</a></li>
+<li><a href="#org6e5b7d6">6.3. Basic app &#x2013; Init. See dashboard-01</a></li>
+<li><a href="#org8d0e7f3">6.4. Notes on the structure of a dashboard: Rstudio documentation link</a>
+<ul>
+<li><a href="#org7b78d3c">6.4.1. Main components : header, sidebar, body -&gt; defined for <code>dashboardPage()</code></a></li>
+</ul>
+</li>
+<li><a href="#org11853c8">6.5. Experimenting with structures</a>
+<ul>
+<li><a href="#org81baf3d">6.5.1. Dropdown menu items (static) : messages, tasks, notifications</a></li>
+<li><a href="#orgc564341">6.5.2. <span class="todo TODO">TODO</span> Dropdown menu for messages with Dynamic message items</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org46c3aa3">7. <span class="todo TODO">TODO</span> Sales revenue app - Shiny dashboard</a>
+<ul>
+<li><a href="#org7326dec">7.1. Reference link</a></li>
+<li><a href="#orgfde5a22">7.2. replicating the code</a>
+<ul>
+<li><a href="#org2b6369f">7.2.1. Loading libraries</a></li>
+<li><a href="#org34ac97d">7.2.2. Downloading raw csv and loading into variable</a></li>
+<li><a href="#orgb01fc0f">7.2.3. Init dashboard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1eb7da4" class="outline-2">
+<h2 id="org1eb7da4"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This repo will serve as a learning and exploration ground to build shiny apps from the ground-up. It will include references, notes and the scripts to reproduce the apps.
+</p>
+
+<p>
+Planned Approach:
+</p>
+<ul class="org-ul">
+<li>Re-implement examples that I find from scratch, and in parallel explore other aspects and variations of the code.</li>
+<li>Apply the concepts learned to develop my own shiny apps.</li>
+<li>Tools used:
+<ul class="org-ul">
+<li>Emacs and Org-mode (source blocks in Org-babel) have been used to create this document and scripts, ala Literate programming.</li>
+<li>Source blocks are tangled into respective app folders and RStudio was used to quickly run and reload apps for testing. (This is just more convenient than launching the web browser from Emacs.)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org060f846" class="outline-2">
+<h2 id="org060f846"><span class="section-number-2">2</span> References</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The references below were instrumental in the learning procedure and also function as a source of inspiration.
+</p>
+
+<p>
+Note: Relevant references and links are also placed alongside the code in each section.
+</p>
+
+<ol class="org-ol">
+<li>Rstudio documentation <a href="https://shiny.rstudio.com/tutorial/">link</a>
+<ul class="org-ul">
+<li>Free video tutorials from Datacamp sponsored by Rstudio. There are links to advanced articles, as well as written tutorials. This is a good resource to get started.</li>
+</ul></li>
+<li>Sales revenue dashboard with Rshiny and ShinyDashboard <a href="https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/">link</a></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org6c40bc6" class="outline-2">
+<h2 id="org6c40bc6"><span class="section-number-2">3</span> Shiny Tutorials - Rstudio <code>[5/6]</code></h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Re-implementing <a href="https://shiny.rstudio.com/tutorial/">Rstudio's tutorials</a> with minor tweaks and additional explorations in some areas.
+</p>
+</div>
+
+<div id="outline-container-orgc79e6cb" class="outline-3">
+<h3 id="orgc79e6cb"><span class="section-number-3">3.1</span> <span class="done DONE">DONE</span> Lesson 1</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-org7319bd0" class="outline-4">
+<h4 id="org7319bd0"><span class="section-number-4">3.1.1</span> Installing the shiny library</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-R">install.packages(<span style="color: #008000;">"shiny"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59962a2" class="outline-4">
+<h4 id="org59962a2"><span class="section-number-4">3.1.2</span> Running in-built shiny examples</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<div class="org-src-container">
+<pre class="src src-R">runExample(<span style="color: #008000;">"01_hello"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org405e765" class="outline-4">
+<h4 id="org405e765"><span class="section-number-4">3.1.3</span> <a href="file:///app-01/">app-01</a></h4>
+<div class="outline-text-4" id="text-3-1-3">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Define UI for app that draws a histogram ----</span>
+ui <span style="color: #D0372D;">&lt;-</span> fluidPage(
+
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">App title ----</span>
+  titlePanel(<span style="color: #008000;">"Hello Shiny!"</span>),
+
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Sidebar layout with input and output definitions ----</span>
+  sidebarLayout(
+
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Sidebar panel for inputs ----</span>
+    sidebarPanel(
+
+      <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Input: Slider for the number of bins ----</span>
+      sliderInput(inputId = <span style="color: #008000;">"bins"</span>,
+                  label = <span style="color: #008000;">"Number of bins:"</span>,
+                  min = 1,
+                  max = 50,
+                  value = 30)
+
+    ),
+
+    <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Main panel for displaying outputs ----</span>
+    mainPanel(
+
+      <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Output: Histogram ----</span>
+      plotOutput(outputId = <span style="color: #008000;">"distPlot"</span>)
+
+    )
+  )
+)
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Define server logic required to draw a histogram ----</span>
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output) {
+
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Histogram of the Old Faithful Geyser Data ----</span>
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">with requested number of bins</span>
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">This expression that generates a histogram is wrapped in a call</span>
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to renderPlot to indicate that:</span>
+  <span style="color: #8D8D84;">#</span>
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">1. It is "reactive" and therefore should be automatically</span>
+  <span style="color: #8D8D84;">#    </span><span style="color: #8D8D84; font-style: italic;">re-executed when inputs (input$bins) change</span>
+  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">2. Its output type is a plot</span>
+
+  output$distPlot <span style="color: #D0372D;">&lt;-</span> renderPlot({
+
+    x    <span style="color: #D0372D;">&lt;-</span> faithful$waiting
+    bins <span style="color: #D0372D;">&lt;-</span> seq(min(x), max(x), length.out = input$bins + 1)
+
+    hist(x, breaks = bins, col = <span style="color: #008000;">"#75AADB"</span>, border = <span style="color: #008000;">"white"</span>,
+         xlab = <span style="color: #008000;">"Waiting time to next eruption (in mins)"</span>,
+         main = <span style="color: #008000;">"Histogram of waiting times"</span>)
+
+    })
+
+}
+
+<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Create Shiny app ----</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org14c6b95" class="outline-3">
+<h3 id="org14c6b95"><span class="section-number-3">3.2</span> <span class="done DONE">DONE</span> Lesson 2</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-org3a3f1c4" class="outline-4">
+<h4 id="org3a3f1c4"><span class="section-number-4">3.2.1</span> Starting with custom app</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+
+    titlePanel(<span style="color: #008000;">"This is the title"</span>),
+
+    sidebarLayout(
+        sidebarPanel(<span style="color: #008000;">"Hello panel"</span>,
+                     h2(<span style="color: #008000;">"This is h2 title in the sidepanel"</span>)),
+        mainPanel(<span style="color: #008000;">"main panel"</span>,
+                  h1(<span style="color: #008000;">"Another title in h1"</span>, align = <span style="color: #008000;">"center"</span>)
+                  ),
+<span style="color: #8D8D84;">#        </span><span style="color: #8D8D84; font-style: italic;">position = "right"</span>
+    )
+
+)
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga05b70a" class="outline-4">
+<h4 id="orga05b70a"><span class="section-number-4">3.2.2</span> Test app for formatting difference highlight</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+ui <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"My Shiny App"</span>),
+  sidebarLayout(
+    sidebarPanel(),
+    mainPanel(
+      p(<span style="color: #008000;">"p creates a paragraph of text."</span>),
+      p(<span style="color: #008000;">"A new p() command starts a new paragraph. Supply a style attribute to change the format of the entire paragraph."</span>, style = <span style="color: #008000;">"font-family: 'times'; font-si16pt"</span>),
+      strong(<span style="color: #008000;">"strong() makes bold text."</span>),
+      em(<span style="color: #008000;">"em() creates italicized (i.e, emphasized) text."</span>),
+      br(),
+      code(<span style="color: #008000;">"code displays your text similar to computer code"</span>),
+      div(<span style="color: #008000;">"div creates segments of text with a similar style. This division of text is all blue because I passed the argument 'style = color:blue' to div"</span>, style = <span style="color: #008000;">"color:blue"</span>),
+      br(),
+      p(<span style="color: #008000;">"span does the same thing as div, but it works with"</span>,
+        span(<span style="color: #008000;">"groups of words"</span>, style = <span style="color: #008000;">"color:blue"</span>),
+        <span style="color: #008000;">"that appear inside a paragraph."</span>)
+    )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcacb07d" class="outline-4">
+<h4 id="orgcacb07d"><span class="section-number-4">3.2.3</span> Testing knowledge. <a href="file:///app-02/">See app-02</a></h4>
+<div class="outline-text-4" id="text-3-2-3">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+    titlePanel(<span style="color: #008000;">"My Shiny App"</span>),
+
+    sidebarLayout(
+        sidebarPanel(h1(<span style="color: #008000;">"Installation"</span>),
+                     p(<span style="color: #008000;">"Shiny is available on CRAN, so you can install it the usual way using:"</span>),
+                     br(),
+                     code(<span style="color: #008000;">'install.packages("shiny")'</span>),
+                     img(src=<span style="color: #008000;">"rstudio.png"</span>, height = 70, width = 200),
+                     p(<span style="color: #008000;">"Shiny is a product of "</span>, a(<span style="color: #008000;">"Rstudio"</span>,
+                                                 href=<span style="color: #008000;">"http://www.shiny.rstudio.com"</span>))
+                     ),
+        mainPanel()
+    )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0ed6d5b" class="outline-3">
+<h3 id="org0ed6d5b"><span class="section-number-3">3.3</span> <span class="done DONE">DONE</span> Lesson 3 Multiple columns</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-org2aaf7fe" class="outline-4">
+<h4 id="org2aaf7fe"><span class="section-number-4">3.3.1</span> Re-implementing example. <a href="file:///app-03/">See app-03</a></h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"Basic widget exploration"</span>),
+
+  fluidRow(
+
+    column(2,
+           h3(<span style="color: #008000;">"buttons"</span>),
+           actionButton(<span style="color: #008000;">"action007"</span>, label =<span style="color: #008000;">"Action"</span>),
+           br(),
+           br(),
+           submitButton(<span style="color: #008000;">"Submit"</span>)
+           ),
+    column(2,
+           h3(<span style="color: #008000;">"Single Checkbox"</span>),
+           checkboxInput(<span style="color: #008000;">"checkbox"</span>, <span style="color: #008000;">"Choice A"</span>, value = T)
+           ),
+    column(3,
+           checkboxGroupInput(<span style="color: #008000;">"checkGroup"</span>,
+                              h3(<span style="color: #008000;">"checkbox group"</span>),
+                              choices = list(<span style="color: #008000;">"Choice 1"</span> = 1,
+                                             <span style="color: #008000;">"Choice 2"</span> = 2,
+                                             <span style="color: #008000;">"Choice 3"</span> = 3
+                                             ),
+                              selected = 1
+                              )
+           ),
+    column(2,
+           dateInput(<span style="color: #008000;">"date"</span>,
+                     h3(<span style="color: #008000;">"date input"</span>),
+                     value = <span style="color: #008000;">""</span>
+                     )
+           )
+
+  ),
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Inserting another fluid row element</span>
+  fluidRow(
+
+    column(2,
+           radioButtons(<span style="color: #008000;">"radio"</span>,
+                        h3(<span style="color: #008000;">"Radio Buttons"</span>),
+                        choices = list(<span style="color: #008000;">"choice 1"</span> = 1,
+                                       <span style="color: #008000;">"choice 2"</span> = 2,
+                                       <span style="color: #008000;">"Radio 3"</span>  = 3
+                                       ),
+                        selected =1
+                        )
+           ),
+
+    column(2,
+           selectInput(<span style="color: #008000;">"select"</span>,
+                       h3(<span style="color: #008000;">"Select box"</span>),
+                       choices = list(<span style="color: #008000;">"choice 1"</span> = 1,
+                                      <span style="color: #008000;">"choice 2"</span> = 2,
+                                      <span style="color: #008000;">"choice 3"</span> = 3
+                                      ),
+                       selected = 1
+                       )
+           ),
+    column(2,
+           sliderInput(<span style="color: #008000;">"slider1"</span>,
+                       h3(<span style="color: #008000;">"Sliders"</span>),
+                       min = 0,
+                       max = 100,
+                       value = 50
+                       ),
+
+           sliderInput(<span style="color: #008000;">"slider2"</span>,
+                       h3(<span style="color: #008000;">"Another Slider"</span>),
+                       min = 50,
+                       max = 200,
+                       value = c(60,80)
+                       )
+           ),
+    column(2,
+           selectInput(<span style="color: #008000;">"selectbox1"</span>,
+                     h3(<span style="color: #008000;">"select from drop down box"</span>),
+                     choices = list(<span style="color: #008000;">"choice 1"</span> = 22,
+                                    <span style="color: #008000;">"choice 2"</span> = 2,
+                                    <span style="color: #008000;">"choice fake 3"</span> = 33
+                                    ),
+                     selected = <span style="color: #008000;">""</span>
+                     )
+           )
+
+  ),
+  fluidRow(
+    column(3,
+           dateRangeInput(<span style="color: #008000;">"daterange"</span>,
+                          h3(<span style="color: #008000;">"Date range input"</span>)
+                          )
+           ),
+
+    column(3,
+           fileInput(<span style="color: #008000;">"fileinput"</span>,
+                     h3(<span style="color: #008000;">"Select File"</span>)
+                     )
+           ),
+
+    column(3,
+           numericInput(<span style="color: #008000;">"numinput"</span>,
+                        h3(<span style="color: #008000;">"Enter numeric value"</span>),
+                        value = 10
+                        )
+           ),
+    column(3,
+           h3(<span style="color: #008000;">"help text"</span>),
+           helpText(<span style="color: #008000;">"Hello this is line one."</span>,
+                    <span style="color: #008000;">"This is line 2..\n"</span>,
+                    <span style="color: #008000;">"This is line 3."</span>
+                    )
+           )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org06e4297" class="outline-4">
+<h4 id="org06e4297"><span class="section-number-4">3.3.2</span> Init censusVis task. <a href="file:///app-04/">See app-04</a></h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"censusViz"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      helpText(<span style="color: #008000;">"Create demographic maps with information form the 2010 US Census"</span>),
+      selectInput(<span style="color: #008000;">"inputbox1"</span>,
+                  h2(<span style="color: #008000;">"Choose variable to display:"</span>),
+                  choices = list(<span style="color: #008000;">"Percent White"</span> = 1,
+                                 <span style="color: #008000;">"Percent Black"</span> = 2,
+                                 <span style="color: #008000;">"Percent Hispanic"</span> = 3,
+                                 <span style="color: #008000;">"Percent Asian"</span> = 4
+                                 ),
+                  selected = <span style="color: #008000;">""</span>
+                  ),
+      sliderInput(<span style="color: #008000;">"slider1"</span>,
+                  h2(<span style="color: #008000;">"Range of interest:"</span>),
+                  min = 0,
+                  max = 100,
+                  value = c(0,100)
+                  )
+    ),
+    mainPanel(<span style="color: #008000;">""</span>)
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6259fb2" class="outline-3">
+<h3 id="org6259fb2"><span class="section-number-3">3.4</span> <span class="done DONE">DONE</span> Lesson 4 : reactive ouput display</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-org2c7ad8d" class="outline-4">
+<h4 id="org2c7ad8d"><span class="section-number-4">3.4.1</span> Reactive censusViz task. <a href="file:///census-app/">See census-app</a></h4>
+<div class="outline-text-4" id="text-3-4-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>, <span style="color: #008000;">"dplyr"</span>, <span style="color: #008000;">"stringr"</span>)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"censusViz"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      helpText(<span style="color: #008000;">"Create demographic maps with information form the 2010 US Census"</span>),
+      selectInput(<span style="color: #008000;">"inputbox1"</span>,
+                  h2(<span style="color: #008000;">"Choose variable to display:"</span>),
+                  choices = list(<span style="color: #008000;">"Percent White"</span> ,
+                                 <span style="color: #008000;">"Percent Black"</span>,
+                                 <span style="color: #008000;">"Percent Hispanic"</span>,
+                                 <span style="color: #008000;">"Percent Asian"</span>
+                                ),
+                  selected = <span style="color: #008000;">""</span>
+                  ),
+      sliderInput(<span style="color: #008000;">"slider1"</span>,
+                  h2(<span style="color: #008000;">"Range of interest:"</span>),
+                  min = 0,
+                  max = 100,
+                  value = c(0,100)
+                  )
+    ),
+    mainPanel(h1(<span style="color: #008000;">"Reactive Output"</span>),
+              textOutput(<span style="color: #008000;">"selected_var"</span>),
+              textOutput(<span style="color: #008000;">"slider_range"</span>)
+              )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  output$selected_var <span style="color: #D0372D;">&lt;-</span> renderText({
+    str_glue(<span style="color: #008000;">"Selected option is {input$inputbox1} "</span>)
+  })
+
+  output$slider_range <span style="color: #D0372D;">&lt;-</span> renderText({
+    str_glue(<span style="color: #008000;">"Range selected from \n {input$slider1[1]} to {input$slider1[2]}"</span>)
+  })
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb966f52" class="outline-4">
+<h4 id="orgb966f52"><span class="section-number-4">3.4.2</span> Test: passing a list to the input choices</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<ul class="org-ul">
+<li>Note taken on <span class="timestamp-wrapper"><span class="timestamp">[2019-02-05 Tue 11:04] </span></span> <br />
+Testing to see if a list defined in a variable can be passed as choices. This is possible.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>, <span style="color: #008000;">"dplyr"</span>, <span style="color: #008000;">"stringr"</span>)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">List to pass into the input box choices</span>
+test_list = list(<span style="color: #008000;">"Percent White"</span> ,
+                 <span style="color: #008000;">"Percent Black"</span>,
+                 <span style="color: #008000;">"Percent Hispanic"</span>,
+                 <span style="color: #008000;">"Percent Asian"</span>
+                 )
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"censusViz"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      helpText(<span style="color: #008000;">"Create demographic maps with information form the 2010 US Census"</span>),
+      selectInput(<span style="color: #008000;">"inputbox1"</span>,
+                  h2(<span style="color: #008000;">"Choose variable to display:"</span>),
+                  choices = test_list,
+                  selected = <span style="color: #008000;">""</span>
+                  ),
+      sliderInput(<span style="color: #008000;">"slider1"</span>,
+                  h2(<span style="color: #008000;">"Range of interest:"</span>),
+                  min = 0,
+                  max = 100,
+                  value = c(0,100)
+                  )
+    ),
+    mainPanel(h1(<span style="color: #008000;">"Reactive Output"</span>),
+              textOutput(<span style="color: #008000;">"selected_var"</span>),
+              textOutput(<span style="color: #008000;">"slider_range"</span>)
+              )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  output$selected_var <span style="color: #D0372D;">&lt;-</span> renderText({
+    str_glue(<span style="color: #008000;">"Selected option is {input$inputbox1} "</span>)
+  })
+
+  output$slider_range <span style="color: #D0372D;">&lt;-</span> renderText({
+    str_glue(<span style="color: #008000;">"Range selected from \n {input$slider1[1]} to {input$slider1[2]}"</span>)
+  })
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgec4fcfb" class="outline-3">
+<h3 id="orgec4fcfb"><span class="section-number-3">3.5</span> <span class="done DONE">DONE</span> Lesson 5: more complex reactive output</h3>
+<div class="outline-text-3" id="text-3-5">
+</div>
+<div id="outline-container-org0979679" class="outline-4">
+<h4 id="org0979679"><span class="section-number-4">3.5.1</span> Testing the helpers.R script for a chloropleth map</h4>
+<div class="outline-text-4" id="text-3-5-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(easypackages)
+libraries(<span style="color: #008000;">"maps"</span>, <span style="color: #008000;">"mapproj"</span>)
+<span style="color: #D0372D;">source</span>(<span style="color: #008000;">"./census-app-02/01_scripts/helpers.R"</span>)
+counties  <span style="color: #D0372D;">&lt;-</span> read_rds(<span style="color: #008000;">"./census-app-02/00_data/counties.rds"</span>)
+percent_map(counties$white, <span style="color: #008000;">"darkgreen"</span>, <span style="color: #008000;">"% White"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc948334" class="outline-4">
+<h4 id="orgc948334"><span class="section-number-4">3.5.2</span> Setting up chloropleth output in shiny app</h4>
+<div class="outline-text-4" id="text-3-5-2">
+<p>
+Using the dataset <code>counties.rds</code> collected with the <code>Uscensus2010</code> R package. <a href="http://shiny.rstudio.com/tutorial/written-tutorial/lesson5/census-app/data/counties.rds">Download link</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>, <span style="color: #008000;">"dplyr"</span>, <span style="color: #008000;">"stringr"</span>, <span style="color: #008000;">"readr"</span>, <span style="color: #008000;">"maps"</span>, <span style="color: #008000;">"mapproj"</span>)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Reading the counties dataset and glimpsing</span>
+<span style="color: #D0372D;">source</span>(<span style="color: #008000;">"helpers.R"</span>)
+counties <span style="color: #D0372D;">&lt;-</span> read_rds(<span style="color: #008000;">"./00_data/counties.rds"</span>)
+counties <span style="color: #D0372D;">%&gt;%</span> glimpse()
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"censusViz"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      helpText(<span style="color: #008000;">"Create demographic maps with information form the 2010 US Census"</span>),
+      selectInput(<span style="color: #008000;">"inputbox1"</span>,
+                  h2(<span style="color: #008000;">"Choose variable to display:"</span>),
+                  choices = list(<span style="color: #008000;">"Percent White"</span> ,
+                                 <span style="color: #008000;">"Percent Black"</span>,
+                                 <span style="color: #008000;">"Percent Hispanic"</span>,
+                                 <span style="color: #008000;">"Percent Asian"</span>
+                                ),
+                  selected = <span style="color: #008000;">""</span>
+                  ),
+      sliderInput(<span style="color: #008000;">"slider1"</span>,
+                  h2(<span style="color: #008000;">"Range of interest:"</span>),
+                  min = 0,
+                  max = 100,
+                  value = c(0,100)
+                  )
+    ),
+    mainPanel(h1(<span style="color: #008000;">"Reactive Output"</span>),
+              textOutput(<span style="color: #008000;">"selected_var"</span>),
+              textOutput(<span style="color: #008000;">"slider_range"</span>),
+              plotOutput(<span style="color: #008000;">"map"</span>)
+              )
+  )
+)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  output$selected_var <span style="color: #D0372D;">&lt;-</span> renderText({
+    str_glue(<span style="color: #008000;">"Selected option is {input$inputbox1} "</span>)
+  })
+
+  output$slider_range <span style="color: #D0372D;">&lt;-</span> renderText({
+    str_glue(<span style="color: #008000;">"Range selected from \n {input$slider1[1]} to {input$slider1[2]}"</span>)
+  })
+
+  output$map  <span style="color: #D0372D;">&lt;-</span> renderPlot({
+
+    arg_list  <span style="color: #D0372D;">&lt;-</span>  <span style="color: #0000FF;">switch</span>(input$inputbox1,
+                         <span style="color: #008000;">"Percent White"</span> = list(counties$white, <span style="color: #008000;">"darkgreen"</span>,<span style="color: #008000;">"% White population"</span>),
+                         <span style="color: #008000;">"Percent Black"</span> = list(counties$black, <span style="color: #008000;">"black"</span>,<span style="color: #008000;">"% Black population"</span>),
+                         <span style="color: #008000;">"Percent Asian"</span> = list(counties$asian, <span style="color: #008000;">"darkorange"</span>,<span style="color: #008000;">"% Asian population"</span>),
+                         <span style="color: #008000;">"Percent Hispanic"</span> = list(counties$hispanic, <span style="color: #008000;">"pink"</span>,<span style="color: #008000;">"% Hispanic population"</span>),
+                         )
+
+    arg_list$max = input$slider1[2]
+    arg_list$min = input$slider1[1]
+
+    do.call(percent_map,arg_list)
+
+  })
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9fd7010" class="outline-3">
+<h3 id="org9fd7010"><span class="section-number-3">3.6</span> <span class="todo TODO">TODO</span> Lesson 6: stockVis app</h3>
+</div>
+</div>
+
+<div id="outline-container-org63e706b" class="outline-2">
+<h2 id="org63e706b"><span class="section-number-2">4</span> Recreating in-built Shiny examples <code>[2/3]</code></h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgb8806be" class="outline-3">
+<h3 id="orgb8806be"><span class="section-number-3">4.1</span> <span class="done DONE">DONE</span> Eg 1 Hello Shiny. <a href="file:///hello-shiny/">See hello-shiny</a></h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"Hello Shiny"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput(<span style="color: #008000;">"slider1"</span>,
+                  label = <span style="color: #008000;">"Number of Bins"</span>,
+                  min = 1,
+                  max = 50,
+                  value = 20
+                  )
+    ),
+      mainPanel(<span style="color: #008000;">""</span>,
+                plotOutput(<span style="color: #008000;">"histplot"</span>)
+                )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  output$histplot <span style="color: #D0372D;">&lt;-</span> renderPlot({
+
+    dataset <span style="color: #D0372D;">&lt;-</span> faithful$waiting
+    bins <span style="color: #D0372D;">&lt;-</span> seq(min(dataset), max(dataset), length.out = input$slider1 +1)
+
+    hist(dataset, breaks = bins, col = <span style="color: #008000;">"blue"</span>, border = <span style="color: #008000;">"white"</span>,
+         xlab = <span style="color: #008000;">"Waiting time to next eruption(mins)"</span>,
+         main = <span style="color: #008000;">"Histogram of waiting times"</span>
+         )
+  })
+
+}
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga35a58d" class="outline-3">
+<h3 id="orga35a58d"><span class="section-number-3">4.2</span> <span class="done DONE">DONE</span> Eg 2 Shiny text. <a href="file:///shiny-text-eg2/">See shiny-text-eg2</a></h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+<span style="color: #D0372D;">library</span>(tidyverse)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  titlePanel(<span style="color: #008000;">"Shiny text"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(<span style="color: #008000;">"dataset_choice"</span>,
+                  label = <span style="color: #008000;">"Choose a dataset"</span>,
+                  choices = c(<span style="color: #008000;">"rock"</span>, <span style="color: #008000;">"diamonds"</span>, <span style="color: #008000;">"cars"</span>),
+                  <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">value = ""</span>
+                  ),
+      numericInput(<span style="color: #008000;">"observation_number"</span>,
+                   label = <span style="color: #008000;">"Choose number of observations to display"</span>,
+                   value = 10
+                   )
+    ),
+    mainPanel(
+
+      verbatimTextOutput(<span style="color: #008000;">"summary"</span>),
+
+      tableOutput(<span style="color: #008000;">"view"</span>)
+    )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  datasetInput <span style="color: #D0372D;">&lt;-</span> reactive({
+    <span style="color: #0000FF;">switch</span>(input$dataset_choice,
+           <span style="color: #008000;">"rock"</span> = rock,
+           <span style="color: #008000;">"diamonds"</span>  = diamonds,
+           <span style="color: #008000;">"cars"</span>   = cars
+           )
+  })
+
+  output$summary <span style="color: #D0372D;">&lt;-</span> renderPrint({
+    datasetInput() <span style="color: #D0372D;">%&gt;%</span> summary()
+  })
+
+  output$view <span style="color: #D0372D;">&lt;-</span> renderTable({
+    datasetInput() <span style="color: #D0372D;">%&gt;%</span> head(n = input$observation_number)
+  })
+}
+
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+<div id="outline-container-org0c530d6" class="outline-4">
+<h4 id="org0c530d6"><span class="section-number-4">4.2.1</span> <span class="done DONE">DONE</span> Base Example</h4>
+</div>
+</div>
+
+<div id="outline-container-org62d5881" class="outline-3">
+<h3 id="org62d5881"><span class="section-number-3">4.3</span> <span class="todo TODO">TODO</span> Eg 6 - tabsets. <a href="file:///tabsets-eg-6/">See tabsets-eg-6</a></h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(shiny)
+<span style="color: #D0372D;">library</span>(shinythemes)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+  themeSelector(),
+  titlePanel(<span style="color: #008000;">"Using tabsets"</span>),
+
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons(<span style="color: #008000;">"dist_type"</span>,
+                   <span style="color: #008000;">"Distribution type"</span>,
+                   choices = c(<span style="color: #008000;">"Normal"</span> = <span style="color: #008000;">"norm"</span>,
+                               <span style="color: #008000;">"Uniform"</span> = <span style="color: #008000;">"unif"</span>,
+                               <span style="color: #008000;">"Log-normal"</span> = <span style="color: #008000;">"lnorm"</span>,
+                               <span style="color: #008000;">"Exponential"</span> = <span style="color: #008000;">"exp"</span>
+                               )
+                   ),
+      sliderInput(<span style="color: #008000;">"slider1"</span>,
+                  label = <span style="color: #008000;">"Number of observations"</span>,
+                  min = 1,
+                  max = 1000,
+                  value = 500
+                  )
+    ),
+
+    mainPanel(
+
+      tabsetPanel(type = <span style="color: #008000;">"tabs"</span>,
+                  tabPanel(title = <span style="color: #008000;">"Plot"</span>, plotOutput(<span style="color: #008000;">"plot1"</span>)),
+                  tabPanel(title = <span style="color: #008000;">"Summary"</span>, verbatimTextOutput(<span style="color: #008000;">"vbto1_summary"</span>)),
+                  tabPanel(title = <span style="color: #008000;">"Table"</span>, tableOutput(<span style="color: #008000;">"tabl1"</span>))
+                  )
+    )
+  )
+)
+
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+  d <span style="color: #D0372D;">&lt;-</span> reactive({
+    dist <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">switch</span>(input$dist_type,
+           norm = rnorm,
+           unif = runif,
+           lnorm = rlnorm,
+           exp = exp
+<span style="color: #8D8D84;">#           </span><span style="color: #8D8D84; font-style: italic;">rnorm</span>
+           )
+
+    dist(input$slider1)
+  })
+
+  output$plot1 <span style="color: #D0372D;">&lt;-</span> renderPlot({
+    dist <span style="color: #D0372D;">&lt;-</span> input$dist_type
+    n <span style="color: #D0372D;">&lt;-</span> input$slider1
+
+    hist(d(),
+         main = paste(<span style="color: #008000;">"r"</span>, dist, <span style="color: #008000;">"("</span>, n, <span style="color: #008000;">")"</span>, sep = <span style="color: #008000;">""</span>),
+         col = <span style="color: #008000;">"blue"</span>, border = <span style="color: #008000;">"white"</span>)
+  })
+
+  output$vbto1_summary <span style="color: #D0372D;">&lt;-</span> renderText({
+    summary(d())
+  })
+
+  output$tabl1 <span style="color: #D0372D;">&lt;-</span> renderTable({
+    d()
+  })
+}
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51927ee" class="outline-2">
+<h2 id="org51927ee"><span class="section-number-2">5</span> Dataset exploration app <code>[0/1]</code></h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org17a72ac" class="outline-3">
+<h3 id="org17a72ac"><span class="section-number-3">5.1</span> Switching to dashboard library</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org2afb111" class="outline-4">
+<h4 id="org2afb111"><span class="section-number-4">5.1.1</span> Loading libraries</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Loading Libraries</span>
+<span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"tidyverse"</span>, <span style="color: #008000;">"tidyquant"</span>, <span style="color: #008000;">"readxl"</span>, <span style="color: #008000;">"shiny"</span>, <span style="color: #008000;">"shinydashboard"</span>, <span style="color: #008000;">"ISLR"</span>, <span style="color: #008000;">"MASS"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org13725b7" class="outline-4">
+<h4 id="org13725b7"><span class="section-number-4">5.1.2</span> UI</h4>
+<div class="outline-text-4" id="text-5-1-2">
+</div>
+<ol class="org-ol">
+<li><a id="orgbf1e162"></a>header<br />
+<div class="outline-text-5" id="text-5-1-2-1">
+<div class="org-src-container">
+<pre class="src src-R">header <span style="color: #D0372D;">&lt;-</span> dashboardHeader(title= <span style="color: #008000;">"R Data set explorer"</span>)
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="orgcb84bb2"></a>sidebar<br />
+<div class="outline-text-5" id="text-5-1-2-2">
+<div class="org-src-container">
+<pre class="src src-R">sidebar <span style="color: #D0372D;">&lt;-</span> dashboardSidebar(
+    sidebarMenu(
+      menuItem(<span style="color: #008000;">"In-built data sets"</span>,
+               tabName = <span style="color: #008000;">"inbuilt_datasets"</span>,
+               icon = icon(<span style="color: #008000;">"dashboard"</span>)
+               ),
+      menuItem(<span style="color: #008000;">"Rdatasets"</span>,
+               tabName = <span style="color: #008000;">"rdatasets"</span>,
+               icon = icon(<span style="color: #008000;">"dashboard"</span>)
+               )
+    )
+)
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org78d8d4d"></a>body<br />
+<div class="outline-text-5" id="text-5-1-2-3">
+<div class="org-src-container">
+<pre class="src src-R">body <span style="color: #D0372D;">&lt;-</span> dashboardBody(
+  tabItems(
+    tabItem(
+      tabName = <span style="color: #008000;">"inbuilt_datasets"</span>,
+      fluidRow(
+
+        box(title = <span style="color: #008000;">"Input"</span>,
+            selectInput(<span style="color: #008000;">"dataset"</span>,
+                        label = <span style="color: #008000;">"Select Dataset"</span>,
+                        choices = c(ls(<span style="color: #008000;">"package:datasets"</span>) ,
+                                    data(package = <span style="color: #008000;">"MASS"</span>)$results <span style="color: #D0372D;">%&gt;%</span> as.tibble <span style="color: #D0372D;">%&gt;%</span> .$Title
+                                    )
+                        )
+           ),
+
+        box(title = <span style="color: #008000;">"Summary"</span>,
+            verbatimTextOutput(<span style="color: #008000;">"summary"</span>),
+            fluidRow(
+              box(
+                title = <span style="color: #008000;">"Data Glimpse"</span>,
+                verbatimTextOutput(<span style="color: #008000;">"glimpse"</span>)
+              )
+            )
+        )
+      )
+      )
+     ),
+  tabItem(
+    tabName = <span style="color: #008000;">"rdatasets"</span>,
+    h2(<span style="color: #008000;">"Rdatasets"</span>),
+    fluidRow(
+
+      box(title = <span style="color: #008000;">"Input"</span>,
+          selectInput(<span style="color: #008000;">"rdataset"</span>,
+                      label = <span style="color: #008000;">"Select from RDatasets"</span>,
+                      choices = data(package = <span style="color: #008000;">"MASS"</span>)$results <span style="color: #D0372D;">%&gt;%</span> as.tibble <span style="color: #D0372D;">%&gt;%</span> .$Title
+                        ),
+
+      box(title = <span style="color: #008000;">"Summary"</span>,
+            verbatimTextOutput(<span style="color: #008000;">"summary_rdatasets"</span>),
+            fluidRow(
+              box(
+            title = <span style="color: #008000;">"Data Glimpse"</span>),
+          verbatimTextOutput(<span style="color: #008000;">"glimpse_rdatasets"</span>)
+          )
+          )
+    )
+  )
+  )
+)
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orge41472c" class="outline-4">
+<h4 id="orge41472c"><span class="section-number-4">5.1.3</span> Calling</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<div class="org-src-container">
+<pre class="src src-R">ui  <span style="color: #D0372D;">&lt;-</span> dashboardPage(header, sidebar, body)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbaf5b60" class="outline-4">
+<h4 id="orgbaf5b60"><span class="section-number-4">5.1.4</span> Server</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  output$summary = renderPrint({
+    dataset <span style="color: #D0372D;">&lt;-</span> get(input$dataset, <span style="color: #008000;">"package:datasets"</span>, inherits = <span style="color: #6434A3;">FALSE</span>)
+    summary(dataset)
+  })
+
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">output$table = renderTable({</span>
+  <span style="color: #8D8D84;">##   </span><span style="color: #8D8D84; font-style: italic;">dataset &lt;- get(input$dataset, "package:datasets", inherits = FALSE)</span>
+  <span style="color: #8D8D84;">##   </span><span style="color: #8D8D84; font-style: italic;">dataset</span>
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">})</span>
+
+  output$glimpse = renderPrint({
+    dataset <span style="color: #D0372D;">&lt;-</span> get(input$dataset, <span style="color: #008000;">"package:datasets"</span>, inherits = <span style="color: #6434A3;">FALSE</span>)
+    glimpse(dataset)
+  })
+
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge05cdb3" class="outline-4">
+<h4 id="orge05cdb3"><span class="section-number-4">5.1.5</span> App</h4>
+<div class="outline-text-4" id="text-5-1-5">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga7ed3d4" class="outline-3">
+<h3 id="orga7ed3d4"><span class="section-number-3">5.2</span> Simple Layout - In built R Data Explorer</h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li>Note taken on <span class="timestamp-wrapper"><span class="timestamp">[2019-02-05 Tue 09:20] </span></span> <br />
+Appears that the sidepanel and mainpanel concepts cannot be used with <code>fluidRow()</code> as subcomponents. Instead, it is possible to use only <code>fluidRow()</code> to partition the page, and use it to create individual rows within a column. Perhaps this is more flexible in the long run.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>, <span style="color: #008000;">"tidyverse"</span>)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> fluidPage(
+    titlePanel(<span style="color: #008000;">"R's in-built Database explorer"</span>),
+
+  fluidRow(
+    column(2,
+           <span style="color: #008000;">"Input"</span>,
+           selectInput(<span style="color: #008000;">"dataset"</span>,
+                       label = <span style="color: #008000;">"Select Dataset"</span>,
+                       choices = ls(<span style="color: #008000;">"package:datasets"</span>)
+                       )
+           ),
+    column(10,
+           verbatimTextOutput(<span style="color: #008000;">"summary"</span>),
+           fluidRow(
+             verbatimTextOutput(<span style="color: #008000;">"glimpse"</span>)
+                         ))
+    )
+)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+
+  output$summary = renderPrint({
+    dataset <span style="color: #D0372D;">&lt;-</span> get(input$dataset, <span style="color: #008000;">"package:datasets"</span>, inherits = <span style="color: #6434A3;">FALSE</span>)
+    summary(dataset)
+  })
+
+  output$table = renderTable({
+    dataset <span style="color: #D0372D;">&lt;-</span> get(input$dataset, <span style="color: #008000;">"package:datasets"</span>, inherits = <span style="color: #6434A3;">FALSE</span>)
+    dataset
+  })
+
+  output$glimpse = renderPrint({
+    dataset <span style="color: #D0372D;">&lt;-</span> get(input$dataset, <span style="color: #008000;">"package:datasets"</span>, inherits = <span style="color: #6434A3;">FALSE</span>)
+    glimpse(dataset)
+  })
+
+}
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd09edea" class="outline-3">
+<h3 id="orgd09edea"><span class="section-number-3">5.3</span> <span class="todo TODO">TODO</span> Shiny app around Rdatasets</h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+<div id="outline-container-orgd5178fd" class="outline-4">
+<h4 id="orgd5178fd"><span class="section-number-4">5.3.1</span> Introduction</h4>
+</div>
+<div id="outline-container-org08e3074" class="outline-4">
+<h4 id="org08e3074"><span class="section-number-4">5.3.2</span> Resources and References</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<ol class="org-ol">
+<li><a href="https://stackoverflow.com/questions/33797666/how-do-i-get-a-list-of-built-in-data-sets-in-r">SO Discusion: List of in-built datasets in R</a></li>
+</ol>
+<p>
+<b>*</b>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb6ac694" class="outline-2">
+<h2 id="orgb6ac694"><span class="section-number-2">6</span> Shiny Dashboard init</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org1baf742" class="outline-3">
+<h3 id="org1baf742"><span class="section-number-3">6.1</span> References and notes</h3>
+<div class="outline-text-3" id="text-6-1">
+<ol class="org-ol">
+<li>Rstudio documentation, getting started with Shiny Dashboard <a href="https://rstudio.github.io/shinydashboard/get_started.html">link</a></li>
+<li><a href="https://shiny.rstudio.com/articles/dashboards.html">There are 2 types of packages</a> available to create dashboards flexdashboard and shiny dashboard.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org7d406aa" class="outline-3">
+<h3 id="org7d406aa"><span class="section-number-3">6.2</span> Installing shiny dashboard</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<pre class="src src-R">install.packages(<span style="color: #008000;">"shinydashboard"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e5b7d6" class="outline-3">
+<h3 id="org6e5b7d6"><span class="section-number-3">6.3</span> Basic app &#x2013; Init. <a href="file:///dashboard-01/">See dashboard-01</a></h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>,<span style="color: #008000;">"shinydashboard"</span>, <span style="color: #008000;">"tidyverse"</span>)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> dashboardPage(
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Inserting the 3 components: header, sidebar, body</span>
+
+  dashboardHeader(title = <span style="color: #008000;">"Basic Dashboard"</span>),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem(<span style="color: #008000;">"Dashboard"</span>,
+               tabName = <span style="color: #008000;">"dashboard"</span>,
+               icon = icon(<span style="color: #008000;">"dashboard"</span>)),
+      menuItem(<span style="color: #008000;">"Widgets"</span>,
+               tabName = <span style="color: #008000;">"widgets"</span>,
+               icon = icon(<span style="color: #008000;">"th"</span>)
+               )
+    )
+  ),
+  dashboardBody(
+    <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Adding a fluidRow with boxes for plot and slider input</span>
+    tabItems(
+      tabItem(
+        tabName = <span style="color: #008000;">"dashboard"</span>,
+        fluidRow(
+
+          box(plotOutput(
+            <span style="color: #008000;">"plot1"</span>,
+            height = 250
+          )),
+
+          box(
+            title = <span style="color: #008000;">"Controls"</span>,
+            sliderInput(<span style="color: #008000;">"slider1"</span>,
+                        <span style="color: #008000;">"Number of observations"</span>,
+                        min = 1,
+                        max = 100,
+                        value = 50)
+          )
+        )
+      ),
+
+      tabItem(tabName = <span style="color: #008000;">"widgets"</span>,
+              h2(<span style="color: #008000;">"Widgets tab"</span>)
+              )
+    )
+  )
+)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+  set.seed(120)
+  histdata <span style="color: #D0372D;">&lt;-</span> rnorm(1000)
+
+  output$plot1 <span style="color: #D0372D;">&lt;-</span> renderPlot({
+    data <span style="color: #D0372D;">&lt;-</span> histdata[seq_len(input$slider1)]
+    hist(data)
+  })
+
+}
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d0e7f3" class="outline-3">
+<h3 id="org8d0e7f3"><span class="section-number-3">6.4</span> Notes on the structure of a dashboard: <a href="https://rstudio.github.io/shinydashboard/structure.html">Rstudio documentation link</a></h3>
+<div class="outline-text-3" id="text-6-4">
+</div>
+<div id="outline-container-org7b78d3c" class="outline-4">
+<h4 id="org7b78d3c"><span class="section-number-4">6.4.1</span> Main components : header, sidebar, body -&gt; defined for <code>dashboardPage()</code></h4>
+<div class="outline-text-4" id="text-6-4-1">
+<p>
+These can be split up into separate variables and fed into the dashboardPage function. This is useful in the case of complex or long programs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">header  <span style="color: #D0372D;">&lt;-</span> dashboardHeader()  <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Defining the content of each function into a variable</span>
+sidebar  <span style="color: #D0372D;">&lt;-</span> dashboardSiderbar()
+body  <span style="color: #D0372D;">&lt;-</span> dashboardBody()
+
+dashboardPage(header, sidebar, body)
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="org89a80ca"></a>Header<br />
+<div class="outline-text-5" id="text-6-4-1-1">
+<p>
+This will contain the dropdownMenu() items of different types. The types could  could be messages or notifications etc.
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org11853c8" class="outline-3">
+<h3 id="org11853c8"><span class="section-number-3">6.5</span> Experimenting with structures</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+Incorporating elements from the structures overview in Rstudio's documentation (<a href="https://rstudio.github.io/shinydashboard/structure.html">link</a>).
+</p>
+</div>
+
+<div id="outline-container-org81baf3d" class="outline-4">
+<h4 id="org81baf3d"><span class="section-number-4">6.5.1</span> Dropdown menu items (static) : messages, tasks, notifications</h4>
+<div class="outline-text-4" id="text-6-5-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>,<span style="color: #008000;">"shinydashboard"</span>, <span style="color: #008000;">"tidyverse"</span>)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define UI</span>
+ui  <span style="color: #D0372D;">&lt;-</span> dashboardPage(
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Inserting the 3 components: header, sidebar, body</span>
+
+  dashboardHeader(title = <span style="color: #008000;">"Basic Dashboard"</span>,
+                  <span style="color: #8D8D84;">##</span><span style="color: #8D8D84; font-style: italic;">Experimenting with static dropdown menu message items.</span>
+                  dropdownMenu(
+                    type = <span style="color: #008000;">"messages"</span>,
+                    <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Message items require a 'from' and 'message' argument</span>
+                    messageItem(
+                      from = <span style="color: #008000;">"Sales Dept"</span>,
+                      message = <span style="color: #008000;">"Sales are steady."</span>
+                    ),
+                    messageItem(
+                      from = <span style="color: #008000;">"Shop Floor"</span>,
+                      message = <span style="color: #008000;">"Job XXX is done"</span>
+                    )
+                  ),
+                  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Adding static tasks items in dropdown menu</span>
+                  dropdownMenu(type = <span style="color: #008000;">"tasks"</span>,
+                               taskItem(value = 37,
+                                        <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">The value denotes the percentage completion</span>
+                                        color = <span style="color: #008000;">"red"</span>,
+                                        <span style="color: #008000;">"Test Project 1"</span>
+                                        ),
+                               taskItem(value = 50,
+                                        color = <span style="color: #008000;">"blue"</span>,
+                                        <span style="color: #008000;">"Test Project 2"</span>
+                                        )
+                               ),
+
+                  dropdownMenu(type = <span style="color: #008000;">"notifications"</span>,
+                               notificationItem(
+                                 text = <span style="color: #008000;">"Blah Blah Today is cold"</span>,
+                                 icon(<span style="color: #008000;">"users"</span>)
+                               ),
+                               notificationItem(
+                                 text = <span style="color: #008000;">"Another notification"</span>,
+                                 icon(<span style="color: #008000;">"truck"</span>),
+                                 status = <span style="color: #008000;">"success"</span>
+                               ),
+                               notificationItem(
+                                 text = <span style="color: #008000;">"3rd notification"</span>,
+                                 icon(<span style="color: #008000;">"exclamation-triangle"</span>),
+                                 status = <span style="color: #008000;">"warning"</span>
+                               )
+                               )
+                  ),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem(<span style="color: #008000;">"Dashboard"</span>,
+               tabName = <span style="color: #008000;">"dashboard"</span>,
+               icon = icon(<span style="color: #008000;">"dashboard"</span>)),
+      menuItem(<span style="color: #008000;">"Widgets"</span>,
+               tabName = <span style="color: #008000;">"widgets"</span>,
+               icon = icon(<span style="color: #008000;">"th"</span>)
+               )
+    )
+  ),
+  dashboardBody(
+    <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Adding a fluidRow with boxes for plot and slider input</span>
+    <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Assigning the tab to the tab names and populating individual content</span>
+    tabItems(
+      tabItem(
+        tabName = <span style="color: #008000;">"dashboard"</span>,
+        fluidRow(
+          <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Note that the objects are encapsulated within a box</span>
+          box(plotOutput(
+            <span style="color: #008000;">"plot1"</span>,
+            height = 250
+          )),
+
+          box(
+            title = <span style="color: #008000;">"Controls"</span>,
+            sliderInput(<span style="color: #008000;">"slider1"</span>,
+                        <span style="color: #008000;">"Number of observations"</span>,
+                        min = 1,
+                        max = 100,
+                        value = 50)
+          )
+        )
+      ),
+
+      tabItem(tabName = <span style="color: #008000;">"widgets"</span>,
+              h2(<span style="color: #008000;">"Widgets tab"</span>)
+              )
+    )
+  )
+)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+  set.seed(120)
+  histdata <span style="color: #D0372D;">&lt;-</span> rnorm(1000)
+
+  output$plot1 <span style="color: #D0372D;">&lt;-</span> renderPlot({
+    data <span style="color: #D0372D;">&lt;-</span> histdata[seq_len(input$slider1)]
+    hist(data)
+  })
+
+}
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc564341" class="outline-4">
+<h4 id="orgc564341"><span class="section-number-4">6.5.2</span> <span class="todo TODO">TODO</span> Dropdown menu for messages with Dynamic message items</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org46c3aa3" class="outline-2">
+<h2 id="org46c3aa3"><span class="section-number-2">7</span> <span class="todo TODO">TODO</span> Sales revenue app - Shiny dashboard</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-org7326dec" class="outline-3">
+<h3 id="org7326dec"><span class="section-number-3">7.1</span> Reference <a href="https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/">link</a></h3>
+</div>
+<div id="outline-container-orgfde5a22" class="outline-3">
+<h3 id="orgfde5a22"><span class="section-number-3">7.2</span> replicating the code</h3>
+<div class="outline-text-3" id="text-7-2">
+<ul class="org-ul">
+<li>Note taken on <span class="timestamp-wrapper"><span class="timestamp">[2019-02-06 Wed 10:17] </span></span> <br />
+With wget : -P is the flag for the prefix directory for the file being downloaded. The path will be created if it does not exist. If the file already exists, a duplicate will be created with the '.1' suffix.</li>
+</ul>
+</div>
+
+<div id="outline-container-org2b6369f" class="outline-4">
+<h4 id="org2b6369f"><span class="section-number-4">7.2.1</span> Loading libraries</h4>
+<div class="outline-text-4" id="text-7-2-1">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"easypackages"</span>)
+libraries(<span style="color: #008000;">"shiny"</span>, <span style="color: #008000;">"shinydashboard"</span>, <span style="color: #008000;">"tidyverse"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org34ac97d" class="outline-4">
+<h4 id="org34ac97d"><span class="section-number-4">7.2.2</span> Downloading raw csv and loading into variable</h4>
+<div class="outline-text-4" id="text-7-2-2">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Download file to specific location</span>
+system(<span style="color: #008000;">"wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/"</span>)
+
+</pre>
+</div>
+
+<p>
+Reading in the csv file
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">recommendation_raw  <span style="color: #D0372D;">&lt;-</span> read.csv(<span style="color: #008000;">"./sales-rev-app/recommendation.csv"</span>, stringsAsFactors = <span style="color: #6434A3;">FALSE</span>, header = <span style="color: #6434A3;">TRUE</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb01fc0f" class="outline-4">
+<h4 id="orgb01fc0f"><span class="section-number-4">7.2.3</span> Init dashboard</h4>
+<div class="outline-text-4" id="text-7-2-3">
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Defining individual components</span>
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">header</span>
+header <span style="color: #D0372D;">&lt;-</span> dashboardHeader(title = <span style="color: #008000;">"Sales Revenue Dashboard"</span>)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">sidebar contents</span>
+sidebar <span style="color: #D0372D;">&lt;-</span>
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem(<span style="color: #008000;">"Dashboard"</span>,
+               icon = icon(<span style="color: #008000;">"dashboard"</span>),
+               tabName = <span style="color: #008000;">"dashboard"</span>
+               ),
+      menuItem(<span style="color: #008000;">"Visit us"</span>,
+               icon = icon(<span style="color: #008000;">"send"</span>, lib = <span style="color: #008000;">'glyphicon'</span>),
+               href = <span style="color: #008000;">"https://shrysr.github.io"</span>
+               )
+    )
+  )
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Defining individual rows</span>
+frow1 <span style="color: #D0372D;">&lt;-</span> fluidRow(
+  box(
+    valueBoxOutput(<span style="color: #008000;">"value1"</span>),
+    valueBoxOutput(<span style="color: #008000;">"value2"</span>),
+    valueBoxOutput(<span style="color: #008000;">"value3"</span>)
+
+  )
+)
+
+frow2 <span style="color: #D0372D;">&lt;-</span> fluidRow(
+  box(
+    title = <span style="color: #008000;">"Revenue per account"</span>,
+    status = <span style="color: #008000;">"primary"</span>,
+    solidHeader = <span style="color: #6434A3;">TRUE</span>,
+    collapsible = <span style="color: #6434A3;">TRUE</span>,
+    plotOutput(<span style="color: #008000;">"revenuebyacct"</span>, height = <span style="color: #008000;">"300px"</span>)
+  )
+)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">combining the defined fluid rows into the dashboard body</span>
+body <span style="color: #D0372D;">&lt;-</span> dashboardBody(frow1, frow2)
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Defining UI</span>
+ui <span style="color: #D0372D;">&lt;-</span> dashboardPage(title = <span style="color: #008000;">"test title"</span>, header,sidebar, body)
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Define server logic</span>
+
+<span style="color: #006699;">server</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(input, output){
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Data manipulation</span>
+  total_revenue <span style="color: #D0372D;">&lt;-</span> sum(recommendation_raw$revenue)
+  sales_account <span style="color: #D0372D;">&lt;-</span>
+    recommendation_raw <span style="color: #D0372D;">%&gt;%</span>
+    group_by(Account) <span style="color: #D0372D;">%&gt;%</span>
+    summarise(value = sum(Revenue)) <span style="color: #D0372D;">%&gt;%</span>
+    filter(value == max(value))
+
+  prof_prod <span style="color: #D0372D;">&lt;-</span>
+    recommendation_raw <span style="color: #D0372D;">%&gt;%</span>
+    group_by(Product) <span style="color: #D0372D;">%&gt;%</span>
+    summarise(value = sum(Revenue)) <span style="color: #D0372D;">%&gt;%</span>
+    filter(value == max(value))
+
+  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Creating valuebox output</span>
+  output$value1 <span style="color: #D0372D;">&lt;-</span> renderValueBox ({
+    valueBox(
+      formatC(sales_account$value, format = <span style="color: #008000;">"d"</span>, big.mark= <span style="color: #008000;">','</span>),
+      paste(<span style="color: #008000;">'Top Account: '</span>, sales_account$Account),
+      icon = icon(<span style="color: #008000;">"stats"</span>, lib =<span style="color: #008000;">'glyphicon'</span>),
+      color = <span style="color: #008000;">"purple"</span>
+    )
+  })
+
+  output$value2 <span style="color: #D0372D;">&lt;-</span> renderValueBox({
+    valueBox(
+      formatC(total_revenue, format = <span style="color: #008000;">"d"</span>, big.mark = <span style="color: #008000;">','</span>),
+      paste(<span style="color: #008000;">'Top Account: '</span>, sales_account$Account),
+      icon = icon(<span style="color: #008000;">"gbp"</span>, lib = <span style="color: #008000;">'glyphicon'</span>),
+      color = <span style="color: #008000;">"green"</span>
+    )
+  })
+
+  output$value3 <span style="color: #D0372D;">&lt;-</span> renderValueBox({
+    valueBox(
+      formatC(total_revenue, format = <span style="color: #008000;">"d"</span>, big.mark = <span style="color: #008000;">','</span>),
+      paste(<span style="color: #008000;">"Top Product: "</span>, prof_prod$Product),
+      icon = icon(<span style="color: #008000;">"menu-hamburger"</span>, lib = <span style="color: #008000;">'glyphicon'</span>),
+      color = <span style="color: #008000;">"yellow"</span>
+    )
+  })
+
+}
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Run the app</span>
+shinyApp(ui = ui, server = server)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Shreyas Ragavan</p>
+<p class="date">Created: 2020-01-08 Wed 12:01</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
