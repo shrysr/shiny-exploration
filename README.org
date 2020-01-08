@@ -844,7 +844,7 @@ sidebar <- dashboardSidebar(
 
 #+RESULTS:
 
-****  body
+**** body
 #+BEGIN_SRC  R :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
 body <- dashboardBody(
   tabItems(
@@ -900,7 +900,7 @@ body <- dashboardBody(
 
 #+RESULTS:
 
-*** Calling
+**** Assigning UI
 #+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
 ui  <- dashboardPage(header, sidebar, body)
 #+END_SRC
@@ -1223,7 +1223,7 @@ shinyApp(ui = ui, server = server)
 ** Reference [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
 ** replicating the code
 - Note taken on [2019-02-06 Wed 10:17] \\
-  With wget : -P is the flag for the prefix directory for the file being downloaded. The path will be created if it does not exist. If the file already exists, a duplicate will be created with the '.1' suffix.
+
 
 *** Loading libraries
 #+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
