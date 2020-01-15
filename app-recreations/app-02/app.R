@@ -2,35 +2,6 @@ library(shiny)
 
 ## Define UI
 ui  <- fluidPage(
-
-    titlePanel("This is the title"),
-
-    sidebarLayout(
-        sidebarPanel("Hello panel",
-                     h2("This is h2 title in the sidepanel")),
-        mainPanel("main panel",
-                  h1("Another title in h1", align = "center")
-                  ),
-#        position = "right"
-    )
-
-)
-## Define server logic
-
-server <- function(input, output){
-
-
-}
-
-
-
-## Run the app
-shinyApp(ui = ui, server = server)
-
-library(shiny)
-
-## Define UI
-ui  <- fluidPage(
     titlePanel("My Shiny App"),
 
     sidebarLayout(

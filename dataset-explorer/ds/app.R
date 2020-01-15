@@ -1,6 +1,6 @@
 # Loading Libraries
 library("easypackages")
-libraries("tidyverse", "tidyquant", "readxl", "shiny", "shinydashboard", "ISLR", "MASS")
+packages("tidyverse", "tidyquant", "readxl", "shiny", "shinydashboard", "ISLR", "MASS", "DT")
 
 header <- dashboardHeader(title= "R Data set explorer")
 

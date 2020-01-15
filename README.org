@@ -1,16 +1,18 @@
 #+property: header-args :eval never-export
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
 #+PROPERTY: mkdirp yes
+
 * Introduction
 
-This [[https://github.com/shrysr/shiny-exploration][repo]] will serve as a learning and exploration ground to build shiny apps from the ground-up. It will include references, notes and the scripts to reproduce the apps.
+This [[https://github.com/shrysr/shiny-exploration][repo]] will serve as a learning and exploration ground to build shiny apps from the ground-up and evolve into my own app showcase. It will include references, notes and the scripts to reproduce the apps.
 
 Planned Approach:
 - Re-implement examples that I find from scratch, and in parallel explore other aspects and variations of the code.
 - Apply the concepts learned to develop my own shiny apps.
-- Tools used:
-  - Emacs and Org-mode (source blocks in Org-babel) have been used to create this document and scripts, ala Literate programming.
-  - Source blocks are tangled into respective app folders and RStudio was used to quickly run and reload apps for testing. (This is just more convenient than launching the web browser from Emacs.)
+
+Tools used:
+- Emacs and Org-mode (source blocks in Org-babel) have been used to create this document and all the source code. My notes live right alongside the code. a.k.a Literate programming at it's finest. Unfortunately, this also means that you will have to scroll down a bit for reading specific notes. Original apps by me are placed upfront in the documentation and the recreations are grouped together.
+- My [[https://hub.docker.com/r/shrysr/shiny][custom docker image]] is used to run shiny server in a docker container and render the apps. This ensures a standard environment for my datascience projects, as explained in [[https://github.com/shrysr/sr-ds-docker][my project]].
 
 * References
 The references below were instrumental in the learning procedure and also function as a source of inspiration.
@@ -21,49 +23,453 @@ Note: Relevant references and links are also placed alongside the code in each s
    - Free video tutorials from Datacamp sponsored by Rstudio. There are links to advanced articles, as well as written tutorials. This is a good resource to get started.
 2. Sales revenue dashboard with Rshiny and ShinyDashboard [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
 
-* Shiny Tutorials - Rstudio [5/6]
-
-Re-implementing [[https://shiny.rstudio.com/tutorial/][Rstudio's tutorials]] with minor tweaks and additional explorations in some areas.
-
-** DONE Lesson 1
-CLOSED: [2019-01-24 Thu 13:22]
-*** App description and Readme
+* Dataset exploration app [0/1]
+** App description and readme
 :PROPERTIES:
-:ID:       135C28EA-A2CC-402D-BBBA-47D35B93F0BC
+:ID:       42319961-C3A7-4121-8A9E-92CBAB0803AE
 :END:
 
-#+BEGIN_SRC txt :tangle ./app-01/DESCRIPTION
-Title: Hello Shiny! - Lesson 1 of Rstudio tutorials
+#+BEGIN_SRC txt :tangle DESCRIPTION
+Title: Internal dataset explorer for R
 Author: Shreyas
-AuthorUrl: http://www.rstudio.com/
+AuthorUrl: https://shreyas.ragavan.co
 License: MIT
 DisplayMode: Showcase
 Tags: getting-started
 Type: Shiny
 #+END_SRC
 
-#+BEGIN_SRC markdown :tangle ./app-01/readme.md
-This app is a reproduction of lesson 1 of the official Rstudio tutorials.
+#+BEGIN_SRC markdown :tangle readme.md
+This app provids a quick overview of the info for all the inbuilt datasets in R. It can also pull in datasets referenced from the repository
 #+END_SRC
 
-*** Installing the shiny library
+** Using the Dashboard library
+*** Loading libraries
+:PROPERTIES:
+:ID:       A239437B-4196-4E38-9EB6-32989678AD1A
+:END:
+#+BEGIN_SRC R :tangle ./dataset-explorer/ds/app.R :session
+# Loading Libraries
+library("easypackages")
+packages("tidyverse", "tidyquant", "readxl", "shiny", "shinydashboard", "ISLR", "MASS", "DT")
+#+END_SRC
+
+#+RESULTS:
+
+*** UI
+**** header
+:PROPERTIES:
+:ID:       22AFAA49-31D3-41F0-AB8C-22F19E656AD4
+:END:
+#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
+header <- dashboardHeader(title= "R Data set explorer")
+#+END_SRC
+
+#+RESULTS:
+
+**** sidebar
+:PROPERTIES:
+:ID:       EC86BD50-D3CB-42AE-A6E7-4C6B70F1F1A5
+:END:
+#+BEGIN_SRC R  :tangle ./dataset-explorer/ds/app.R
+sidebar <- dashboardSidebar(
+    sidebarMenu(
+      menuItem("In-built data sets",
+               tabName = "inbuilt_datasets",
+               icon = icon("dashboard")
+               ),
+      menuItem("Rdatasets",
+               tabName = "rdatasets",
+               icon = icon("dashboard")
+               )
+    )
+)
+#+END_SRC
+
+#+RESULTS:
+
+**** body
+:PROPERTIES:
+:ID:       B5C91572-8382-45DC-92C6-28BF69EB95BC
+:END:
+#+BEGIN_SRC  R :tangle ./dataset-explorer/ds/app.R
+body <- dashboardBody(
+  tabItems(
+    tabItem(
+      tabName = "inbuilt_datasets",
+      fluidRow(
+
+        box(title = "Input",
+            selectInput("dataset",
+                        label = "Select Dataset",
+                        choices = c(ls("package:datasets") ,
+                                    data(package = "MASS")$results %>% as.tibble %>% .$Title
+                                    )
+                        )
+           ),
+
+        box(title = "Summary",
+            verbatimTextOutput("summary"),
+            fluidRow(
+              box(
+                title = "Data Glimpse",
+                verbatimTextOutput("glimpse")
+              )
+            )
+        )
+      )
+      )
+     ),
+  tabItem(
+    tabName = "rdatasets",
+    h2("Rdatasets"),
+    fluidRow(
+
+      box(title = "Input",
+          selectInput("rdataset",
+                      label = "Select from RDatasets",
+                      choices = data(package = "MASS")$results %>% as.tibble %>% .$Title
+                        ),
+
+      box(title = "Summary",
+            verbatimTextOutput("summary_rdatasets"),
+            fluidRow(
+              box(
+            title = "Data Glimpse"),
+          verbatimTextOutput("glimpse_rdatasets")
+          )
+          )
+    )
+  )
+  )
+)
+#+END_SRC
+
+#+RESULTS:
+
+**** Assigning UI
+:PROPERTIES:
+:ID:       165061AC-1BCA-4199-9751-F83DBE3A2A64
+:END:
+#+BEGIN_SRC R  :tangle ./dataset-explorer/ds/app.R
+ui  <- dashboardPage(header, sidebar, body)
+#+END_SRC
+
+#+RESULTS:
+
+*** Server
+:PROPERTIES:
+:ID:       326AB9C9-8310-4B0C-BA39-3424A3006545
+:END:
+
+#+BEGIN_SRC R  :tangle ./dataset-explorer/ds/app.R
+## Define server logic
+
+server <- function(input, output){
+
+  output$summary = renderPrint({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    summary(dataset)
+  })
+
+  ## output$table = renderTable({
+  ##   dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+  ##   dataset
+  ## })
+
+  output$glimpse = renderPrint({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    glimpse(dataset)
+  })
+
+}
+#+END_SRC
+
+#+RESULTS:
+
+*** App
+:PROPERTIES:
+:ID:       5E285D47-8A5E-4877-95D1-6FEB83ECABE4
+:END:
+
+#+BEGIN_SRC R  :tangle ./dataset-explorer/ds/app.R
+## Run the app
+shinyApp(ui = ui, server = server)
+#+END_SRC
+
+** Simple Layout - In built R Data Explorer
+:PROPERTIES:
+:ID:       C4C79F90-C98D-43B2-931F-5FB8B570BDD4
+:END:
+- Note taken on [2019-02-05 Tue 09:20] \\
+  Appears that the sidepanel and mainpanel concepts cannot be used with =fluidRow()= as subcomponents. Instead, it is possible to use only =fluidRow()= to partition the page, and use it to create individual rows within a column. Perhaps this is more flexible in the long run.
+
+#+BEGIN_SRC R  :tangle ./dataset-explorer/app.R
+library("easypackages")
+libraries("shiny", "tidyverse")
+
+## Define UI
+ui  <- fluidPage(
+    titlePanel("R's in-built Database explorer"),
+
+  fluidRow(
+    column(2,
+           "Input",
+           selectInput("dataset",
+                       label = "Select Dataset",
+                       choices = ls("package:datasets")
+                       )
+           ),
+    column(10,
+           verbatimTextOutput("summary"),
+           fluidRow(
+             verbatimTextOutput("glimpse")
+                         ))
+    )
+)
+
+## Define server logic
+
+server <- function(input, output){
+
+  output$summary = renderPrint({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    summary(dataset)
+  })
+
+  output$table = renderTable({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    dataset
+  })
+
+  output$glimpse = renderPrint({
+    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
+    glimpse(dataset)
+  })
+
+}
+
+## Run the app
+shinyApp(ui = ui, server = server)
+
+#+END_SRC
+
+** TODO Shiny app around Rdatasets
+*** Introduction
+*** Resources and References
+1. [[https://stackoverflow.com/questions/33797666/how-do-i-get-a-list-of-built-in-data-sets-in-r][SO Discusion: List of in-built datasets in R]]
+***
+* TODO Sales revenue app - Shiny dashboard
+** Reference [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
+** replicating the code
+- Note taken on [2019-02-06 Wed 10:17] \\
+*** Loading libraries
+:PROPERTIES:
+:ID:       DEC2DB7B-7CDD-4BCF-930B-36EC56FEDBE3
+:END:
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R
+library("easypackages")
+libraries("shiny", "shinydashboard", "tidyverse")
+#+END_SRC
+
+*** Downloading raw csv and loading into variable
+:PROPERTIES:
+:ID:       30D7D799-000D-451E-B315-E50150492695
+:END:
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R
+## Download file to specific location
+system("wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/")
+
+#+END_SRC
+
+Reading in the csv file
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R
+recommendation_raw  <- read.csv("./sales-rev-app/recommendation.csv", stringsAsFactors = FALSE, header = TRUE)
+#+END_SRC
+
+#+RESULTS:
+| Axis Bank    | FBB  | North |  2000 |
+| HSBC         | FBB  | South | 30000 |
+| SBI          | FBB  | East  |  1000 |
+| ICICI        | FBB  | West  |  1000 |
+| Bandhan Bank | FBB  | West  |   200 |
+| Axis Bank    | SIMO | North |   200 |
+| HSBC         | SIMO | South |   300 |
+| SBI          | SIMO | East  |   100 |
+| ICICI        | SIMO | West  |   100 |
+| Bandhan Bank | SIMO | West  |   200 |
+
+*** Init dashboard
+:PROPERTIES:
+:ID:       c4cc69be-7be8-40d9-86ed-aac4dde8d5f0
+:END:
+
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R
+## Defining individual components
+
+## header
+header <- dashboardHeader(title = "Sales Revenue Dashboard")
+
+## sidebar contents
+sidebar <-
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard",
+               icon = icon("dashboard"),
+               tabName = "dashboard"
+               ),
+      menuItem("Visit us",
+               icon = icon("send", lib = 'glyphicon'),
+               href = "https://shrysr.github.io"
+               )
+    )
+  )
+
+## Defining individual rows
+frow1 <- fluidRow(
+  box(
+    valueBoxOutput("value1"),
+    valueBoxOutput("value2"),
+    valueBoxOutput("value3")
+
+  )
+)
+
+frow2 <- fluidRow(
+  box(
+    title = "Revenue per account",
+    status = "primary",
+    solidHeader = TRUE,
+    collapsible = TRUE,
+    plotOutput("revenuebyacct", height = "300px")
+  )
+)
+
+## combining the defined fluid rows into the dashboard body
+body <- dashboardBody(frow1, frow2)
+
+## Defining UI
+ui <- dashboardPage(title = "test title", header,sidebar, body)
+
+#+END_SRC
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R
+## Define server logic
+
+server <- function(input, output){
+  ## Data manipulation
+  total_revenue <- sum(recommendation_raw$revenue)
+  sales_account <-
+    recommendation_raw %>%
+    group_by(Account) %>%
+    summarise(value = sum(Revenue)) %>%
+    filter(value == max(value))
+
+  prof_prod <-
+    recommendation_raw %>%
+    group_by(Product) %>%
+    summarise(value = sum(Revenue)) %>%
+    filter(value == max(value))
+
+  ## Creating valuebox output
+  output$value1 <- renderValueBox ({
+    valueBox(
+      formatC(sales_account$value, format = "d", big.mark= ','),
+      paste('Top Account: ', sales_account$Account),
+      icon = icon("stats", lib ='glyphicon'),
+      color = "purple"
+    )
+  })
+
+  output$value2 <- renderValueBox({
+    valueBox(
+      formatC(total_revenue, format = "d", big.mark = ','),
+      paste('Top Account: ', sales_account$Account),
+      icon = icon("gbp", lib = 'glyphicon'),
+      color = "green"
+    )
+  })
+
+  output$value3 <- renderValueBox({
+    valueBox(
+      formatC(total_revenue, format = "d", big.mark = ','),
+      paste("Top Product: ", prof_prod$Product),
+      icon = icon("menu-hamburger", lib = 'glyphicon'),
+      color = "yellow"
+    )
+  })
+
+}
+
+#+END_SRC
+
+#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R
+## Run the app
+shinyApp(ui = ui, server = server)
+
+#+END_SRC
+* App Recreation
+:PROPERTIES:
+:header-args: :mkdirp yes :dir ./app-recreations/
+:END:
+
+#+BEGIN_QUOTEoooooo
+These apps have been re-built mostly as is to gain familiarity, and with some minor explorations from official tutorials.
+#+END_QUOTE
+
+** Shiny Tutorials - Rstudio [5/6]
+:PROPERTIES:
+:header-args: :mkdirp yes :dir ./app-recreations/
+:END:
+Re-implementing [[https://shiny.rstudio.com/tutorial/][Rstudio's tutorials]] with minor tweaks and additional explorations in some areas.
+
+*** DONE Lesson 1
+CLOSED: [2020-01-15 Wed 14:24]
+:PROPERTIES:
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/app-01/
+:END:
+
+**** App description and Readme
+:PROPERTIES:
+:ID:       BE8C65C8-DFA0-42A2-BAF1-34C4E26B2AE7
+:END:
+
+#+BEGIN_SRC txt :tangle (concat (org-entry-get nil "PRJ-DIR" t) "DESCRIPTION")
+Title: Hello Shiny! - Lesson 1 of Rstudio tutorials
+Author: Shreyas
+AuthorUrl: https://shreyas.ragavan.co
+License: MIT
+DisplayMode: Showcase
+Tags: getting-started
+Type: Shiny
+#+END_SRC
+
+#+BEGIN_SRC markdown :tangle (concat (org-entry-get nil "PRJ-DIR" t) "readme.md")
+This app is a reproduction of lesson 1 of the official Rstudio tutorials. Change the slider to modify the number of bins.
+#+END_SRC
+
+**** Installing the shiny library                               :noexport:
 
 #+BEGIN_SRC R :session *R:shiny-exploration
 install.packages("shiny")
 #+END_SRC
 
-*** Running in-built shiny examples
+**** Running in-built shiny examples
 
 #+BEGIN_SRC R :session *R:shiny-exploration
 runExample("01_hello")
 #+END_SRC
 
-*** [[/app-01/][app-01]]
+**** [[/app-recreations/app-01/][app-01]]
 :PROPERTIES:
 :ID:       0BFAA059-DF9C-43EE-999D-3476CDC8E805
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration :tangle ./app-01/app.R
+#+BEGIN_SRC R :session *R:shiny-exploration :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library(shiny)
 
 # Define UI for app that draws a histogram ----
@@ -126,14 +532,37 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-** DONE Lesson 2
-CLOSED: [2019-01-24 Thu 13:20]
-*** Starting with custom app
+*** DONE Lesson 2 Jumbotron
+CLOSED: [2020-01-15 Wed 14:24]
+:PROPERTIES:
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/app-02/
+:END:
+**** App description and Readme
+:PROPERTIES:
+:ID:       0A0BC4A5-9CB2-4E4D-A467-121DE78CED4D
+:END:
+
+#+BEGIN_SRC txt :tangle (concat (org-entry-get nil "PRJ-DIR" t) "DESCRIPTION")
+Title: Hello Shiny! - Lesson 2 of Rstudio tutorials
+Author: Shreyas
+AuthorUrl: https://shreyas.ragavan.co
+License: MIT
+DisplayMode: Showcase
+Tags: getting-started
+Type: Shiny
+#+END_SRC
+
+#+BEGIN_SRC markdown :tangle (concat (org-entry-get nil "PRJ-DIR" t) "readme.md")
+This app is a reproduction of lesson 2 of the official Rstudio tutorials. This is a simple display of a jumbotron.
+#+END_SRC
+
+**** Starting with custom app
 :PROPERTIES:
 :ID:       C28D2DED-58D7-47A6-8799-767A8E8FDC8B
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration :tangle ./app-02/app.R
+#+BEGIN_SRC R :session *R:shiny-exploration
 library(shiny)
 
 ## Define UI
@@ -164,9 +593,9 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-*** Test app for formatting difference highlight
+**** Test app for formatting difference highlight
 
-#+BEGIN_SRC R :session *R:shiny-exploration*
+#+BEGIN_SRC R
 library(shiny)
 
 ui <- fluidPage(
@@ -194,12 +623,12 @@ ui <- fluidPage(
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-*** Testing knowledge. [[/app-02/][See app-02]]
+**** Testing knowledge. [[/app-recreations/app-02/][See app-02]]
 :PROPERTIES:
 :ID:       5FE10AA0-1E81-48D9-85E9-8E782EB2E935
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./app-02/app.R
+#+BEGIN_SRC R  :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library(shiny)
 
 ## Define UI
@@ -231,14 +660,42 @@ shinyApp(ui = ui, server = server)
 
 #+RESULTS:
 
-** DONE Lesson 3 Multiple columns
-CLOSED: [2019-01-28 Mon 09:46]
-*** Re-implementing example. [[/app-03/][See app-03]]
+*** DONE Lesson 3 Multiple columns
+CLOSED: [2020-01-15 Wed 14:26]
+:PROPERTIES:
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/app-03/
+:END:
+
+**** App description and readme
+:PROPERTIES:
+:ID:       02A8BF7A-8B1F-4997-BCD7-D8D64A941BE9
+:END:
+:PROPERTIES:
+:ID:       42319961-C3A7-4121-8A9E-92CBAB0803AE
+
+:END:
+
+#+BEGIN_SRC txt :tangle (concat (org-entry-get nil "PRJ-DIR" t) "DESCRIPTION")
+Title: Hello Shiny! - Lesson 3 of Rstudio tutorials
+Author: Shreyas
+AuthorUrl: https://shreyas.ragavan.co
+License: MIT
+DisplayMode: Showcase
+Tags: getting-started
+Type: Shiny
+#+END_SRC
+
+#+BEGIN_SRC markdown :tangle (concat (org-entry-get nil "PRJ-DIR" t) "readme.md")
+This app is a reproduction of lesson 3 of the official Rstudio tutorials. This is a display of several widgets available with Shiny spread over multiple columns.
+#+END_SRC
+
+**** Re-implementing example. [[/app-recreations/app-03/][See app-03]]
 :PROPERTIES:
 :ID:       4DE740BB-E632-4013-BB0F-65BE0FBF4EB7
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle app-03/app.R
+#+BEGIN_SRC R  :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library(shiny)
 
 ## Define UI
@@ -372,65 +829,19 @@ shinyApp(ui = ui, server = server)
 
 #+RESULTS:
 
-*** Init censusVis task. [[/app-04/][See app-04]]
+*** DONE Lesson 4 : reactive ouput display, census viz
+CLOSED: [2020-01-15 Wed 14:27]
 :PROPERTIES:
-:ID:       8D7695A3-C7D1-46CB-9AD9-052227DC61BB
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/app-04/
 :END:
-
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle app-04/app.R
-library(shiny)
-
-## Define UI
-ui  <- fluidPage(
-  titlePanel("censusViz"),
-
-  sidebarLayout(
-    sidebarPanel(
-      helpText("Create demographic maps with information form the 2010 US Census"),
-      selectInput("inputbox1",
-                  h2("Choose variable to display:"),
-                  choices = list("Percent White" = 1,
-                                 "Percent Black" = 2,
-                                 "Percent Hispanic" = 3,
-                                 "Percent Asian" = 4
-                                 ),
-                  selected = ""
-                  ),
-      sliderInput("slider1",
-                  h2("Range of interest:"),
-                  min = 0,
-                  max = 100,
-                  value = c(0,100)
-                  )
-    ),
-    mainPanel("")
-  )
-)
-
-
-## Define server logic
-
-server <- function(input, output){
-
-
-}
-
-
-
-## Run the app
-shinyApp(ui = ui, server = server)
-
-
-#+END_SRC
-
-** DONE Lesson 4 : reactive ouput display
-CLOSED: [2019-01-28 Mon 10:51]
-*** Reactive censusViz task. [[/census-app/][See census-app]]
+**** Reactive censusViz task. [[/census-app/][See census-app]]
 :PROPERTIES:
 :ID:       ee5090b3-e89b-4859-aa1f-25e340b47bf7
+:header-args: :mkdirp yes :dir ./rstudio-tutorials/app-04/
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app/app.R
+#+BEGIN_SRC R
 library("easypackages")
 libraries("shiny", "dplyr", "stringr")
 
@@ -486,7 +897,7 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-*** Test: passing a list to the input choices
+**** Test: passing a list to the input choices
 :PROPERTIES:
 :ID:       D67D0D19-CF30-4157-A98C-BD44B317A69F
 :END:
@@ -494,7 +905,7 @@ shinyApp(ui = ui, server = server)
 - Note taken on [2019-02-05 Tue 11:04] \\
   Testing to see if a list defined in a variable can be passed as choices. This is possible.
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app/app.R
+#+BEGIN_SRC R  :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library("easypackages")
 libraries("shiny", "dplyr", "stringr")
 
@@ -552,13 +963,13 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-** DONE Lesson 5: more complex reactive output
+*** DONE Lesson 5: more complex reactive output
 CLOSED: [2019-01-28 Mon 13:30]
-*** Testing the helpers.R script for a chloropleth map
+**** Testing the helpers.R script for a chloropleth map
 
 #+BEGIN_SRC R :session *R:shiny-exploration*
 library(easypackages)
-libraries("maps", "mapproj")
+packages("maps", "mapproj")
 source("./census-app-02/01_scripts/helpers.R")
 counties  <- read_rds("./census-app-02/00_data/counties.rds")
 percent_map(counties$white, "darkgreen", "% White")
@@ -571,13 +982,13 @@ percent_map(counties$white, "darkgreen", "% White")
 | 0.21281857787809 | 0.19002668659856 | -0.401840098661777 | 0.520483137251405 | -0.344832092682208 | 0.384749789681005 |
 | 0.21281857787809 | 0.19002668659856 | -0.401840098661777 | 0.520483137251405 | -0.344832092682208 | 0.357603120166925 |
 
-*** Setting up chloropleth output in shiny app
+**** Setting up chloropleth output in shiny app
 :PROPERTIES:
 :ID:       1FA6CA17-DE9A-475B-A0DD-8F6457A3A434
 :END:
 Using the dataset =counties.rds= collected with the =Uscensus2010= R package. [[http://shiny.rstudio.com/tutorial/written-tutorial/lesson5/census-app/data/counties.rds][Download link]].
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle census-app-02/app.R
+#+BEGIN_SRC R  :tangle census-app-02/app.R
 library("easypackages")
 libraries("shiny", "dplyr", "stringr", "readr", "maps", "mapproj")
 
@@ -654,19 +1065,20 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-** TODO Lesson 6: stockVis app
-
-* Recreating in-built Shiny examples [2/3]
+*** TODO Lesson 6: stockVis app
+** Recreating in-built Shiny examples [2/3]
 :PROPERTIES:
 :CREATED:  <2019-01-29 Tue 07:19>
 :END:
-** DONE Eg 1 Hello Shiny. [[/hello-shiny/][See hello-shiny]]
+*** DONE Eg 1 Hello Shiny. [[/hello-shiny/][See hello-shiny]]
 CLOSED: [2019-02-05 Tue 12:14]
 :PROPERTIES:
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/shiny-hello/
 :ID:       23E27D04-B45B-440D-A4AE-7ADEA48EA250
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./hello-shiny/app.R
+#+BEGIN_SRC R  :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library(shiny)
 
 ## Define UI
@@ -710,13 +1122,15 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 #+END_SRC
 
-** DONE Eg 2 Shiny text. [[/shiny-text-eg2/][See shiny-text-eg2]]
+*** DONE Eg 2 Shiny text. [[/shiny-text-eg2/][See shiny-text-eg2]]
 CLOSED: [2019-01-29 Tue 08:21]
 :PROPERTIES:
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/shiny-text-eg2/
 :ID:       6E0E8862-4096-441A-81C0-DFEBF5957F62
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./shiny-text-eg2/app.R
+#+BEGIN_SRC R  :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library(shiny)
 library(tidyverse)
 
@@ -772,14 +1186,16 @@ server <- function(input, output){
 ## Run the app
 shinyApp(ui = ui, server = server)
 #+END_SRC
-*** DONE Base Example
+**** DONE Base Example
 
-** TODO Eg 6 - tabsets. [[/tabsets-eg-6/][See tabsets-eg-6]]
+*** TODO Eg 6 - tabsets. [[/tabsets-eg-6/][See tabsets-eg-6]]
 :PROPERTIES:
 :ID:       BD21A308-00FB-4E3B-B1D9-4B44DA6BBB39
+:header-args: :mkdirp yes
+:PRJ-DIR: ./app-recreations/tabsets-eg-6/
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./tabsets-eg-6/app.R
+#+BEGIN_SRC R  :tangle (concat (org-entry-get nil "PRJ-DIR" t) "app.R")
 library(shiny)
 library(shinythemes)
 
@@ -856,239 +1272,22 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-* Dataset exploration app [0/1]
-** Switching to dashboard library
-*** Loading libraries
-:PROPERTIES:
-:ID:       A239437B-4196-4E38-9EB6-32989678AD1A
-:END:
-#+BEGIN_SRC R :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
-# Loading Libraries
-library("easypackages")
-libraries("tidyverse", "tidyquant", "readxl", "shiny", "shinydashboard", "ISLR", "MASS")
-#+END_SRC
-
-#+RESULTS:
-
-*** UI
-**** header
-:PROPERTIES:
-:ID:       22AFAA49-31D3-41F0-AB8C-22F19E656AD4
-:END:
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
-header <- dashboardHeader(title= "R Data set explorer")
-#+END_SRC
-
-#+RESULTS:
-
-**** sidebar
-:PROPERTIES:
-:ID:       EC86BD50-D3CB-42AE-A6E7-4C6B70F1F1A5
-:END:
-#+BEGIN_SRC R  :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
-sidebar <- dashboardSidebar(
-    sidebarMenu(
-      menuItem("In-built data sets",
-               tabName = "inbuilt_datasets",
-               icon = icon("dashboard")
-               ),
-      menuItem("Rdatasets",
-               tabName = "rdatasets",
-               icon = icon("dashboard")
-               )
-    )
-)
-#+END_SRC
-
-#+RESULTS:
-
-**** body
-:PROPERTIES:
-:ID:       B5C91572-8382-45DC-92C6-28BF69EB95BC
-:END:
-#+BEGIN_SRC  R :tangle ./dataset-explorer/ds/app.R :session *R:shiny-exploration*
-body <- dashboardBody(
-  tabItems(
-    tabItem(
-      tabName = "inbuilt_datasets",
-      fluidRow(
-
-        box(title = "Input",
-            selectInput("dataset",
-                        label = "Select Dataset",
-                        choices = c(ls("package:datasets") ,
-                                    data(package = "MASS")$results %>% as.tibble %>% .$Title
-                                    )
-                        )
-           ),
-
-        box(title = "Summary",
-            verbatimTextOutput("summary"),
-            fluidRow(
-              box(
-                title = "Data Glimpse",
-                verbatimTextOutput("glimpse")
-              )
-            )
-        )
-      )
-      )
-     ),
-  tabItem(
-    tabName = "rdatasets",
-    h2("Rdatasets"),
-    fluidRow(
-
-      box(title = "Input",
-          selectInput("rdataset",
-                      label = "Select from RDatasets",
-                      choices = data(package = "MASS")$results %>% as.tibble %>% .$Title
-                        ),
-
-      box(title = "Summary",
-            verbatimTextOutput("summary_rdatasets"),
-            fluidRow(
-              box(
-            title = "Data Glimpse"),
-          verbatimTextOutput("glimpse_rdatasets")
-          )
-          )
-    )
-  )
-  )
-)
-#+END_SRC
-
-#+RESULTS:
-
-**** Assigning UI
-:PROPERTIES:
-:ID:       165061AC-1BCA-4199-9751-F83DBE3A2A64
-:END:
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
-ui  <- dashboardPage(header, sidebar, body)
-#+END_SRC
-
-#+RESULTS:
-
-*** Server
-:PROPERTIES:
-:ID:       326AB9C9-8310-4B0C-BA39-3424A3006545
-:END:
-
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
-## Define server logic
-
-server <- function(input, output){
-
-  output$summary = renderPrint({
-    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
-    summary(dataset)
-  })
-
-  ## output$table = renderTable({
-  ##   dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
-  ##   dataset
-  ## })
-
-  output$glimpse = renderPrint({
-    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
-    glimpse(dataset)
-  })
-
-}
-#+END_SRC
-
-#+RESULTS:
-
-*** App
-:PROPERTIES:
-:ID:       5E285D47-8A5E-4877-95D1-6FEB83ECABE4
-:END:
-
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/ds/app.R
-## Run the app
-shinyApp(ui = ui, server = server)
-#+END_SRC
-
-** Simple Layout - In built R Data Explorer
-:PROPERTIES:
-:ID:       C4C79F90-C98D-43B2-931F-5FB8B570BDD4
-:END:
-- Note taken on [2019-02-05 Tue 09:20] \\
-  Appears that the sidepanel and mainpanel concepts cannot be used with =fluidRow()= as subcomponents. Instead, it is possible to use only =fluidRow()= to partition the page, and use it to create individual rows within a column. Perhaps this is more flexible in the long run.
-
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dataset-explorer/app.R
-library("easypackages")
-libraries("shiny", "tidyverse")
-
-## Define UI
-ui  <- fluidPage(
-    titlePanel("R's in-built Database explorer"),
-
-  fluidRow(
-    column(2,
-           "Input",
-           selectInput("dataset",
-                       label = "Select Dataset",
-                       choices = ls("package:datasets")
-                       )
-           ),
-    column(10,
-           verbatimTextOutput("summary"),
-           fluidRow(
-             verbatimTextOutput("glimpse")
-                         ))
-    )
-)
-
-## Define server logic
-
-server <- function(input, output){
-
-  output$summary = renderPrint({
-    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
-    summary(dataset)
-  })
-
-  output$table = renderTable({
-    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
-    dataset
-  })
-
-  output$glimpse = renderPrint({
-    dataset <- get(input$dataset, "package:datasets", inherits = FALSE)
-    glimpse(dataset)
-  })
-
-}
-
-## Run the app
-shinyApp(ui = ui, server = server)
-
-#+END_SRC
-
-** TODO Shiny app around Rdatasets
-*** Introduction
-*** Resources and References
-1. [[https://stackoverflow.com/questions/33797666/how-do-i-get-a-list-of-built-in-data-sets-in-r][SO Discusion: List of in-built datasets in R]]
-***
-* Shiny Dashboard init
-** References and notes
+** Shiny Dashboard init
+*** References and notes
 1. Rstudio documentation, getting started with Shiny Dashboard [[https://rstudio.github.io/shinydashboard/get_started.html][link]]
 2. [[https://shiny.rstudio.com/articles/dashboards.html][There are 2 types of packages]] available to create dashboards flexdashboard and shiny dashboard.
-** Installing shiny dashboard
+*** Installing shiny dashboard
 
-#+BEGIN_SRC R :session *R:shiny-exploration*
+#+BEGIN_SRC R
 install.packages("shinydashboard")
 #+END_SRC
 
-** Basic app -- Init. [[/dashboard-01/][See dashboard-01]]
+*** Basic app -- Init. [[/dashboard-01/][See dashboard-01]]
 :PROPERTIES:
 :ID:       1b87facf-ff4e-4246-837b-545fbb0260b1
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dashboard-01/app.R
+#+BEGIN_SRC R  :tangle ./app-recreations/dashboard-01/app.R
 library("easypackages")
 libraries("shiny","shinydashboard", "tidyverse")
 
@@ -1156,8 +1355,8 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-** Notes on the structure of a dashboard: [[https://rstudio.github.io/shinydashboard/structure.html][Rstudio documentation link]]
-*** Main components : header, sidebar, body -> defined for =dashboardPage()=
+*** Notes on the structure of a dashboard: [[https://rstudio.github.io/shinydashboard/structure.html][Rstudio documentation link]]
+**** Main components : header, sidebar, body -> defined for =dashboardPage()=
 These can be split up into separate variables and fed into the dashboardPage function. This is useful in the case of complex or long programs.
 
 #+BEGIN_SRC R
@@ -1168,20 +1367,20 @@ body  <- dashboardBody()
 dashboardPage(header, sidebar, body)
 #+END_SRC
 
-**** Header
+***** Header
 
 This will contain the dropdownMenu() items of different types. The types could  could be messages or notifications etc.
 
-** Experimenting with structures
+*** Experimenting with structures
 
 Incorporating elements from the structures overview in Rstudio's documentation ([[https://rstudio.github.io/shinydashboard/structure.html][link]]).
 
-*** Dropdown menu items (static) : messages, tasks, notifications
+**** Dropdown menu items (static) : messages, tasks, notifications
 :PROPERTIES:
 :ID:       961DB746-CE19-43B2-BA98-EE1F8CD5F76E
 :END:
 
-#+BEGIN_SRC R :session *R:shiny-exploration* :tangle ./dashboard-01/app.R
+#+BEGIN_SRC R  :tangle ./dashboard-01/app.R
 library("easypackages")
 libraries("shiny","shinydashboard", "tidyverse")
 
@@ -1293,159 +1492,4 @@ shinyApp(ui = ui, server = server)
 
 #+END_SRC
 
-*** TODO Dropdown menu for messages with Dynamic message items
-
-* TODO Sales revenue app - Shiny dashboard
-** Reference [[https://datascienceplus.com/building-a-simple-sales-revenue-dashboard-with-r-shiny-shinydashboard/][link]]
-** replicating the code
-- Note taken on [2019-02-06 Wed 10:17] \\
-
-
-*** Loading libraries
-:PROPERTIES:
-:ID:       DEC2DB7B-7CDD-4BCF-930B-36EC56FEDBE3
-:END:
-#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-library("easypackages")
-libraries("shiny", "shinydashboard", "tidyverse")
-#+END_SRC
-
-*** Downloading raw csv and loading into variable
-:PROPERTIES:
-:ID:       30D7D799-000D-451E-B315-E50150492695
-:END:
-
-#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-## Download file to specific location
-system("wget \"https://raw.githubusercontent.com/amrrs/sample_revenue_dashboard_shiny/master/recommendation.csv\" -P ./sales-rev-app/")
-
-#+END_SRC
-
-Reading in the csv file
-
-#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-recommendation_raw  <- read.csv("./sales-rev-app/recommendation.csv", stringsAsFactors = FALSE, header = TRUE)
-#+END_SRC
-
-#+RESULTS:
-| Axis Bank    | FBB  | North |  2000 |
-| HSBC         | FBB  | South | 30000 |
-| SBI          | FBB  | East  |  1000 |
-| ICICI        | FBB  | West  |  1000 |
-| Bandhan Bank | FBB  | West  |   200 |
-| Axis Bank    | SIMO | North |   200 |
-| HSBC         | SIMO | South |   300 |
-| SBI          | SIMO | East  |   100 |
-| ICICI        | SIMO | West  |   100 |
-| Bandhan Bank | SIMO | West  |   200 |
-
-*** Init dashboard
-:PROPERTIES:
-:ID:       c4cc69be-7be8-40d9-86ed-aac4dde8d5f0
-:END:
-
-
-#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-## Defining individual components
-
-## header
-header <- dashboardHeader(title = "Sales Revenue Dashboard")
-
-## sidebar contents
-sidebar <-
-  dashboardSidebar(
-    sidebarMenu(
-      menuItem("Dashboard",
-               icon = icon("dashboard"),
-               tabName = "dashboard"
-               ),
-      menuItem("Visit us",
-               icon = icon("send", lib = 'glyphicon'),
-               href = "https://shrysr.github.io"
-               )
-    )
-  )
-
-## Defining individual rows
-frow1 <- fluidRow(
-  box(
-    valueBoxOutput("value1"),
-    valueBoxOutput("value2"),
-    valueBoxOutput("value3")
-
-  )
-)
-
-frow2 <- fluidRow(
-  box(
-    title = "Revenue per account",
-    status = "primary",
-    solidHeader = TRUE,
-    collapsible = TRUE,
-    plotOutput("revenuebyacct", height = "300px")
-  )
-)
-
-## combining the defined fluid rows into the dashboard body
-body <- dashboardBody(frow1, frow2)
-
-## Defining UI
-ui <- dashboardPage(title = "test title", header,sidebar, body)
-
-#+END_SRC
-
-#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-## Define server logic
-
-server <- function(input, output){
-  ## Data manipulation
-  total_revenue <- sum(recommendation_raw$revenue)
-  sales_account <-
-    recommendation_raw %>%
-    group_by(Account) %>%
-    summarise(value = sum(Revenue)) %>%
-    filter(value == max(value))
-
-  prof_prod <-
-    recommendation_raw %>%
-    group_by(Product) %>%
-    summarise(value = sum(Revenue)) %>%
-    filter(value == max(value))
-
-  ## Creating valuebox output
-  output$value1 <- renderValueBox ({
-    valueBox(
-      formatC(sales_account$value, format = "d", big.mark= ','),
-      paste('Top Account: ', sales_account$Account),
-      icon = icon("stats", lib ='glyphicon'),
-      color = "purple"
-    )
-  })
-
-  output$value2 <- renderValueBox({
-    valueBox(
-      formatC(total_revenue, format = "d", big.mark = ','),
-      paste('Top Account: ', sales_account$Account),
-      icon = icon("gbp", lib = 'glyphicon'),
-      color = "green"
-    )
-  })
-
-  output$value3 <- renderValueBox({
-    valueBox(
-      formatC(total_revenue, format = "d", big.mark = ','),
-      paste("Top Product: ", prof_prod$Product),
-      icon = icon("menu-hamburger", lib = 'glyphicon'),
-      color = "yellow"
-    )
-  })
-
-}
-
-#+END_SRC
-
-#+BEGIN_SRC R :mkdirp yes :tangle ./sales-rev-app/app.R :session *R:shiny-exploration*
-## Run the app
-shinyApp(ui = ui, server = server)
-
-#+END_SRC
+**** TODO Dropdown menu for messages with Dynamic message items
